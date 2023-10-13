@@ -26,7 +26,7 @@ bool check_matrix_vector_of_1_product(std::vector<double> matrix) {
 // il vettore probabilmente va inizializzato dentro un for perché cambia ogni volta che
 // cambiamo riga cioè è 1 0 0, 0 1 0, 0 0 1 etc, quindi devi tenerne conto
 // e ovviamente scrivere solo un return false-true e non i quindi devi trovare
-// un modo per controllarli tutti ma stampare solo un risultato
+// un modo per controllarli tutti ma stampare solo un risultato (con qualcosa tipo if (corretto1 && corretton &&) return true)??
 bool check_matrix_canonical_basis_product(matrix) {
     std::vector<int> vector1(size_rows, 1); // canonical vector with lenght the number of rows of the matrix
     // Calculate the array where every entry is the sum of the i-th column of the matrix
