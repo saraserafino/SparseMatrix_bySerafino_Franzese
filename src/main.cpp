@@ -4,22 +4,25 @@
 #include "converter.hpp"
 #include <iostream>
 
-int main () {
-    // Let's run some tests to validate the correctness of the program
-    
-    // Given a vector of 1, the matrix-vector product must give the sum of the i-th row
+bool check_matrix_vector_product(std::vector<double> matrix) {
     std::vector<int> vector1(size_rows, 1); // initialize the vector of 1 with lenght the number of rows of the matrix
+    // Calculate the sum of the i-th row of the matrix
     for (unsigned int i = 0; i < size_rows; ++i) {
         std::vector<double> sum_rows[i] = 0; // initializate the result to 0
         for (unsigned int j = 0; j < size_columns; ++j) {
-            sum_rows[i] += sum_rows[j-1]
+            sum_rows[i] += A[i,j];
         }
     }
-    if (matrix*vector1 == sum_rows) {
-        std::cout << "The matrix-vector product works well!" << std::endl;
+    // If correct, the matrix-vector product must give the sum of the i-th row
+    if (matrix*vector1 != sum_rows) {
+        return false; // The matrix-vector product doesn't work well
     }
-    else {
-        std::cout << "The matrix-vector product doesn't work well." << std::endl;
-    }
+    return true; // The matrix-vector product works well!
+}
+
+int main () {
+    // Let's run some tests to validate the correctness of the program
+    
+    std::cout << "Does the matrix-vector product work well?" << check_matrix_vector_product(matrix) << std::endl;
     return 0;
 }
