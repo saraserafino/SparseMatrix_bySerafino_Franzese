@@ -2,7 +2,7 @@
 #include <vector>
 
 // the array values contains all the nonzero values
-// we'll call the standard length nnz (nonzero)
+// we'll call the standard length nnz (number of non-zeros)
 std::vector<double> values =
 // the array columns of int contains their corresponding column indices
 // so its length is the same as that of values (nnz)
