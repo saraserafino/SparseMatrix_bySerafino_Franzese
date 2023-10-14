@@ -6,6 +6,7 @@
 class SparseMatrix { // abstract class
 public:
     virtual double boh() = 0; // Pure virtual method
+    // qua dentro implementa le cose che COO e CSR hanno in comune come get rows, columns
 }; // forse qua inizializziamo la matrice con tutti 0?
 
 class altrochenonso : public SparseMatrix {
