@@ -2,8 +2,7 @@
 
 // The following class is an abstract class because there's at least one virtual method defined as pure virtual.
 // Pure virtual functions act as placeholders for functionality that must be provided by derived classes.
-// They enforce a specifi method signature that derived classes must adhere to.
-// ok non lo è ancora ma shh
+// They enforce a specific method signature that derived classes must adhere to.
 class SparseMatrix { // abstract class
 public:
     virtual double boh() = 0; // Pure virtual method
@@ -11,9 +10,10 @@ public:
 
 class altrochenonso : public SparseMatrix {
 public:
-    // praticamente ora dobbiamo dare altri nomi (vedi slide lezione 4)
-// dovresti scrivere double boh() override {return cose;} e private: double cose;
-// le seguenti cose non sono ancora modificate seguendo abstract    
+    // praticamente ora dobbiamo dare altri nomi
+// forse per ognuno dei punti richiesti (get number of rows, columns, read an entry etc) dobbiamo fare una classe come
+// nell'esempio ossia double boh() override {return cose;} e private: double cose;???
+// le seguenti cose non sono ancora modificate seguendo abstract class
 SparseMatrix(const int size_rows, const int size_columns, std::vector<double> &numbers)
     : size_rows(size_rows), size_columns(size_columns),  {
 
