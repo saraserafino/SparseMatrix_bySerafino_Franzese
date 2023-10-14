@@ -3,7 +3,7 @@
 #include "SparseMatrixCSR.hpp"
 #include "converter.hpp"
 #include <iostream>
-//a caso
+
 // Preferred to run some tests with boolean functions. In this way the main is cleaner and there are less lines per test
 // which is faster to remove by commenting if you don't want to run them every time
 bool check_matrix_vector_of_1_product(std::vector<double> matrix) {
