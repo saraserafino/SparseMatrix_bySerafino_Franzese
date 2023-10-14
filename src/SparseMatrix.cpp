@@ -1,8 +1,20 @@
 #include "SparseMatrix.hpp"
 
-class SparseMatrix {
+// The following class is an abstract class because there's at least one virtual method defined as pure virtual.
+// Pure virtual functions act as placeholders for functionality that must be provided by derived classes.
+// They enforce a specifi method signature that derived classes must adhere to.
+// ok non lo è ancora ma shh
+class SparseMatrix { // abstract class
 public:
-    SparseMatrix(const int size_rows, const int size_columns, std::vector<double> &numbers)
+    virtual double boh() = 0; // Pure virtual method
+}; // forse qua inizializziamo la matrice con tutti 0?
+
+class altrochenonso : public SparseMatrix {
+public:
+    // praticamente ora dobbiamo dare altri nomi (vedi slide lezione 4)
+// dovresti scrivere double boh() override {return cose;} e private: double cose;
+// le seguenti cose non sono ancora modificate seguendo abstract    
+SparseMatrix(const int size_rows, const int size_columns, std::vector<double> &numbers)
     : size_rows(size_rows), size_columns(size_columns),  {
 
     }
