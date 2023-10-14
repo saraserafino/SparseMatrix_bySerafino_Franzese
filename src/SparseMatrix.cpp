@@ -6,17 +6,13 @@
 // They enforce a specific method signature that derived classes must adhere to.
 class SparseMatrix { // abstract class
 public:
-    virtual double boh() = 0; // Pure virtual method
-    // qua dentro implementa le cose che COO e CSR hanno in comune come get rows, columns
-}; // forse qua inizializziamo la matrice con tutti 0?
+    // Defining the pure virtual methods that _COO and _CSR have in common
+    virtual int get_rows() = 0;
+    virtual int get_columns() = 0;
+    virtual int get_nonzeros() = 0;
 
-class altrochenonso : public SparseMatrix {
-public:
-    // praticamente ora dobbiamo dare altri nomi
-// forse per ognuno dei punti richiesti (get number of rows, columns, read an entry etc) dobbiamo fare una classe come
-// nell'esempio ossia double boh() override {return cose;} e private: double cose;???
 // le seguenti cose non sono ancora modificate seguendo abstract class
-SparseMatrix(const int size_rows, const int size_columns, std::vector<double> &numbers)
+    SparseMatrix(const int size_rows, const int size_columns, std::vector<double> &numbers)
     : size_rows(size_rows), size_columns(size_columns),  {
 
     }
@@ -40,6 +36,12 @@ SparseMatrix(const int size_rows, const int size_columns, std::vector<double> &n
     }
     // Poi scrivendo SparseMatrix matrice{}; SparseMatrix vettore{}; farai
     // SparseMatrix prodotto=matrice*vettore;
-double size_rows;
-double size_columns;
+int size_rows;
+int size_columns;
+private:
+// the length of the following arrays is nnz (number of non-zeros)
+// the array values contains all the nonzero values
+std::vector<double> values;
+// the array rows of int contains their corresponding row indices
+std::vector<int> rows;
 }; //quando lo chiami fai SparseMatrix sparsematrix{4,4} e crei una matrice 4x4
