@@ -2,6 +2,7 @@
 
 // The following class is an abstract class because there's at least one virtual method defined as pure virtual.
 // Pure virtual functions act as placeholders for functionality that must be provided by derived classes.
+// Here the derived classes are SparseMatrixCOO and SparseMatrixCSR
 // They enforce a specific method signature that derived classes must adhere to.
 class SparseMatrix { // abstract class
 public:
