@@ -1,8 +1,8 @@
+#include <iostream>
 #include "SparseMatrix.hpp"
-#include "SparseMatrixCOO.hpp"
+/* #include "SparseMatrixCOO.hpp"
 #include "SparseMatrixCSR.hpp"
 #include "converter.hpp"
-#include <iostream>
 
 // Preferred to run some tests with boolean functions. In this way the main is cleaner and there are less lines per test
 // which is faster to remove by commenting if you don't want to run them every time
@@ -42,12 +42,14 @@ bool check_matrix_canonical_basis_product(matrix) {
     }
     return true; // It works
     }
-
+*/
 int main () {
+    //const double input1[][] = {[1,0,0],[0,2,0],[1,0,0]};
+    double SparseMatrix matrix(3,3); // matrice 3x3
     // Let's run some tests to validate the correctness of the program
     
-    std::cout << "Does the matrix-vector product work well?" << std::endl << "Multiplying the matrix for a vector of 1 it's "
+    /*std::cout << "Does the matrix-vector product work well?" << std::endl << "Multiplying the matrix for a vector of 1 it's "
     << check_matrix_vector_of_1_product(matrix) << std::endl << "Multiplying the matrix for the i-th vector of the canonical basis it's "
-    << check_matrix_canonical_basis_product(matrix) << std::endl;
+    << check_matrix_canonical_basis_product(matrix) << std::endl; */
     return 0;
 }

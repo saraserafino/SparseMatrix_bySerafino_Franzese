@@ -12,6 +12,6 @@ private:
 // i-th row excluded. Its length is m+1 with m number of rows of A
 std::vector<int> rows_idx;
 // il seguente va nel costruttore PIANGO
-row_idx[0] = 0 // convention. In this way row_idx[i+1] - row_idx[i] represents the
+const row_idx[0] = 0 // convention. In this way row_idx[i+1] - row_idx[i] represents the
 // number of nonzero elements in the i-th row
 };

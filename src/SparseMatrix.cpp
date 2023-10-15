@@ -1,4 +1,5 @@
 #include "SparseMatrix.hpp"
+#include <iostream>
 
 // The following class is an abstract class because there's at least one virtual method defined as pure virtual.
 // Pure virtual functions act as placeholders for functionality that must be provided by derived classes.
@@ -11,37 +12,38 @@ public:
     virtual int get_columns() = 0;
     virtual int get_nonzeros() = 0;
 
-// le seguenti cose non sono ancora modificate seguendo abstract class
-    SparseMatrix(const int size_rows, const int size_columns, std::vector<double> &numbers)
-    : size_rows(size_rows), size_columns(size_columns),  {
-
-    }
-    // Implement access and write matrix entries by overloading the operator ()
-    SparseMatrix operator()(matrice) {
-        
-    }
-    // Implement the matrix-vector product by overloading the operator *
-    SparseMatrix operator*(vettore) {
-        SparseMatrix result;
-        result.size_rows = 1;
-        result.size_columns = size_vettore;
-        for (unsigned int i = 0; i < size_rows; ++i) {
+    // Constructor
+    SparseMatrix::SparseMatrix(const int &input_size_rows, const int &input_size_columns)
+    : size_rows(input_size_rows), size_columns(input_size_columns), matrix(new double[size_rows][size_columns])
+    {
+    for (unsigned int i = 0; i < size_rows; ++i) {
             for (unsigned int j = 0; j < size_columns; ++j) {
-                if (A[i,j] != 0) {
-                    result[i] += A[i,j]*vettore[j];
-                }
+                matrix[i][j] = 0;
             }
+    }
+    }
+
+    // Copy constructor
+    SparseMatrix::SparseMatrix(const SparseMatrix &other)
+    : size_rows(other.size_rows), size_columns(other.size_columns), matrix(new double[size_rows][size_columns])
+    {
+    for (unsigned int i = 0; i < size_rows; ++i) {
+            for (unsigned int j = 0; j < size_columns; ++j) {
+                matrix[i][j] = other[i][j];
+            }
+    }
+    };
+
+    // Implement access and write matrix entries by overloading the operator ()
+    SparseMatrix operator()(int &input_size_rows, int &input_size_columns) {
+        SparseMatrix result;
+        if (input_size_rows >= 0 && input_size_rows < size_rows && input_size_columns >= 0 && input_size_columns < size_columns)
+        {
+            return matrix[input_size_rows][input_size_columns];
+        }
+        else {
+            std::cout << "Index out of bounds." << std::endl;
         }
         return result;
     }
-    // Poi scrivendo SparseMatrix matrice{}; SparseMatrix vettore{}; farai
-    // SparseMatrix prodotto=matrice*vettore;
-int size_rows;
-int size_columns;
-private:
-// the length of the following arrays is nnz (number of non-zeros)
-// the array values contains all the nonzero values
-std::vector<double> values;
-// the array rows of int contains their corresponding row indices
-std::vector<int> rows;
-}; //quando lo chiami fai SparseMatrix sparsematrix{4,4} e crei una matrice 4x4
+};

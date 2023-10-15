@@ -7,7 +7,8 @@ public:
     int get_rows() override {
 
     }
+    
 // the length of the following array is nnz (number of non-zeros)
 // the array cols of int contains their corresponding column indices
-std::vector<int> cols;
+std::vector<int> rows;
 };
