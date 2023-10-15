@@ -46,4 +46,13 @@ public:
         }
         return result;
     }
+private:
+std::vector<std::vector<double>> *matrix;
+int size_rows;
+int size_columns;
+// the length of the following arrays is nnz (number of non-zeros)
+// the array values contains all the nonzero values
+std::vector<double> values;
+// the array columns of int contains their corresponding columns indices
+std::vector<int> cols;
 };

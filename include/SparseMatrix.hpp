@@ -25,8 +25,8 @@ public:
     ~SparseMatrix() {
         delete[] matrix;
     }
-private: // questi vanno nell'hpp
-double *matrix;
+private:
+std::vector<std::vector<double>> *matrix;
 int size_rows;
 int size_columns;
 // the length of the following arrays is nnz (number of non-zeros)
