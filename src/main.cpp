@@ -45,7 +45,8 @@ bool check_matrix_canonical_basis_product(matrix) {
 */
 int main () {
     //const double input1[][] = {[1,0,0],[0,2,0],[1,0,0]};
-    double SparseMatrix matrix(3,3); // matrice 3x3
+   const SparseMatrix matrix{2,3} ; // matrice 3x3
+
     // Let's run some tests to validate the correctness of the program
     
     /*std::cout << "Does the matrix-vector product work well?" << std::endl << "Multiplying the matrix for a vector of 1 it's "

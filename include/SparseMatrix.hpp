@@ -16,23 +16,15 @@ public:
     SparseMatrix::SparseMatrix(const SparseMatrix &other);
 
     // Implement access and write matrix entries by overloading the operator ()
-    SparseMatrix operator()(int &input_size_rows, int &input_size_columns);
+    double &operator()(int &input_size_rows, int &input_size_columns);
 
     // Implement the matrix-vector product by overloading the operator *
     // SparseMatrix operator*(vettore);
 
     // Destructor
-    ~SparseMatrix() {
+   /* ~SparseMatrix() {
         delete[] matrix;
-    }
-private:
-std::vector<std::vector<double>> *matrix;
-int size_rows;
-int size_columns;
-// the length of the following arrays is nnz (number of non-zeros)
-// the array values contains all the nonzero values
-std::vector<double> values;
-// the array columns of int contains their corresponding columns indices
-std::vector<int> cols;
+    }*/
+
 };
 #endif
