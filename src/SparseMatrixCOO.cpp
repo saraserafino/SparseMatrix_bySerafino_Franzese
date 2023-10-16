@@ -1,7 +1,7 @@
 #include "SparseMatrixCOO.hpp"
 #include <vector>
 
-class SpareMatrixCOO : public SparseMatrix {
+class SparseMatrixCOO : public SparseMatrix {
 public:
 // per ognuno dei punti richiesti (get number of rows, columns, read an entry etc) dobbiamo fare una funzione come
     /*
