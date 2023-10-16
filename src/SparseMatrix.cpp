@@ -31,13 +31,4 @@
     }
     }
 
-    // Implement access and write matrix entries by overloading the operator ()
-    double& SparseMatrix::operator()(int &input_size_rows, int &input_size_columns) {
-        if (input_size_rows >= 0 && input_size_rows < size_rows && input_size_columns >= 0 && input_size_columns < size_columns)
-        {
-            return matrix[input_size_columns*input_size_rows + input_size_rows];
-        }
-        else {
-            throw std::out_of_range("Index out of bounds");
-        }
-    }
+
