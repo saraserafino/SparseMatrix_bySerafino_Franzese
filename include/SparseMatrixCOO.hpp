@@ -12,8 +12,7 @@ public:
     */
    SparseMatrixCOO(const int &input_size_rows, const int &input_size_columns, int nnz);
    void setElement(int index_row, int index_col, double value);
-   void printCOO();
-
+    // void printmatrix(); // essendo già in SparseMatrix non penso serva definirlo qua
 
 private:
 // the length of the following array is nnz (number of non-zeros)
