@@ -1,7 +1,7 @@
 #include "SparseMatrixCSR.hpp"
 #include <vector>
 
-class SpareMatrixCSR : public SparseMatrix {
+class SparseMatrixCSR : public SparseMatrix {
 public:
 // per ognuno dei punti richiesti (get number of rows, columns, read an entry etc) dobbiamo fare una funzione come
     /* int get_rows() override {
