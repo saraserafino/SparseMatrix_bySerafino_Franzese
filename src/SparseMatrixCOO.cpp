@@ -26,17 +26,28 @@ public:
         if (current_nnz >= nnz) {
             throw std::overflow_error("Too many non-zeros.");
         }
+        values[current_nnz] = value;
         rows[current_nnz] = index_row;
         cols[current_nnz] = index_col;
-        values[current_nnz] = value;
         current_nnz++;
     }
 
-    void printCOO() {
-        for (int i = 0; i < nnz; ++i) {
-            std::cout << "values[" << i << "] = " << values[i] << ", rows[" << i << "] = " << rows[i]
-                      << ", cols[" << i << "] = " << cols[i] << std::endl;
+    void printmatrix() override {
+        std::cout << "values = [";
+        for (int i = 0; i < nnz - 1; ++i) {
+            std::cout << values[i] << ", ";
         }
+        std::cout << values[nnz - 1] << "]" << std::endl;
+        std::cout << "rows = [";
+        for (int i = 0; i < nnz - 1; ++i) {
+            std::cout << rows[i] << ", ";
+        }
+        std::cout << rows[nnz - 1] << "]" << std::endl;
+        std::cout << "columns = [";
+        for (int i = 0; i < nnz - 1; ++i) {
+            std::cout << cols[i] << ", ";
+        }
+        std::cout << cols[nnz - 1] << "]" << std::endl;
     }
 
 
