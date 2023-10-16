@@ -1,7 +1,7 @@
 #include <iostream>
 #include "SparseMatrix.hpp"
-/* #include "SparseMatrixCOO.hpp"
-#include "SparseMatrixCSR.hpp"
+#include "SparseMatrixCOO.hpp"
+/*#include "SparseMatrixCSR.hpp"
 #include "converter.hpp"
 
 // Preferred to run some tests with boolean functions. In this way the main is cleaner and there are less lines per test
@@ -44,13 +44,29 @@ bool check_matrix_canonical_basis_product(matrix) {
     }
 */
 int main () {
-    //const double input1[][] = {[1,0,0],[0,2,0],[1,0,0]};
-   const SparseMatrix matrix{2,3} ; // matrice 3x3
+//const double input1[][] = {[1,0,0],[0,2,0],[1,0,0]};
+SparseMatrixCOO matriceCOO(4, 5, 6); // matrice 4x5 con 6 elementi nnz
+matriceCOO.setElement(0, 2, 3.1);
+matriceCOO.setElement(0, 4, 4);
+matriceCOO.setElement(1, 2, 5);
+matriceCOO.setElement(1, 4, 7.4);
+matriceCOO.setElement(3, 1, 2);
+matriceCOO.setElement(3, 3, 6);
+matriceCOO.printmatrix();
+// Proviamo con la stessa matrice di prima ma con altro metodo
+SparseMatrixCSR matriceCSR(4, 5, 6);
+matriceCSR.setElement(0, 2, 3.1);
+matriceCSR.setElement(0, 4, 4);
+matriceCSR.setElement(1, 2, 5);
+matriceCSR.setElement(1, 4, 7.4);
+matriceCSR.setElement(3, 1, 2);
+matriceCSR.setElement(3, 3, 6);
+matriceCSR.printmatrix();
 
-    // Let's run some tests to validate the correctness of the program
+// Let's run some tests to validate the correctness of the program
     
-    /*std::cout << "Does the matrix-vector product work well?" << std::endl << "Multiplying the matrix for a vector of 1 it's "
-    << check_matrix_vector_of_1_product(matrix) << std::endl << "Multiplying the matrix for the i-th vector of the canonical basis it's "
-    << check_matrix_canonical_basis_product(matrix) << std::endl; */
-    return 0;
+/*std::cout << "Does the matrix-vector product work well?" << std::endl << "Multiplying the matrix for a vector of 1 it's "
+<< check_matrix_vector_of_1_product(matrix) << std::endl << "Multiplying the matrix for the i-th vector of the canonical basis it's "
+<< check_matrix_canonical_basis_product(matrix) << std::endl; */
+return 0;
 }
