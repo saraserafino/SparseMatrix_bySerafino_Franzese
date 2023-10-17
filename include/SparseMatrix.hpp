@@ -24,7 +24,7 @@ public:
     // Implement the matrix-vector product by overloading the operator *
     // SparseMatrix operator*(vettore);
     // Destructor
-   ~SparseMatrix() {
+   virtual ~SparseMatrix() {
         delete[] matrix;
    }
 private:
