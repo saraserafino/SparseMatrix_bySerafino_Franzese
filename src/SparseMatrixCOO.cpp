@@ -1,18 +1,14 @@
 #include "SparseMatrixCOO.hpp"
-#include "SparseMatrix.hpp"
 #include <vector>
 #include <iostream>
 class SparseMatrixCOO : public SparseMatrix {
 public:
-    SparseMatrixCOO(const int input_size_rows, const int input_size_columns) : SparseMatrix(const int input_size_rows, const int input_size_columns) {
+    SparseMatrixCOO(const int &input_size_rows, const int &input_size_columns)
+    : SparseMatrix(const int input_size_rows, const int input_size_columns) {
 
     }
-// per ognuno dei punti richiesti (get number of rows, columns, read an entry etc) dobbiamo fare una funzione come
     /*
-    int get_rows() override {
 
-    }
-    
    SparseMatrixCOO(const int &input_size_rows, const int &input_size_columns, int nnz)
     : size_rows(input_size_rows), size_columns(input_size_columns), nnz(nnz)
     {
@@ -54,39 +50,32 @@ public:
         std::cout << cols[nnz - 1] << "]" << std::endl;
     }
 */
-    // Implement access and write matrix entries by overloading the operator ()
-    double& operator()(int &input_size_rows, int &input_size_columns) {
-        if (input_size_rows >= 0 && input_size_rows < size_rows && input_size_columns >= 0 && input_size_columns < size_columns)
+
+    unsigned int get_rows() const override {}
+
+    double& operator()(unsigned int &input_size_rows, unsigned int &input_size_columns) override {
+        if (input_size_rows < 0 || input_size_rows >= size_rows || input_size_columns < 0 || input_size_columns >= size_columns)
         {
-            return matrix[input_size_columns*input_size_rows + input_size_rows];
-        }
-        else {
             throw std::out_of_range("Index out of bounds");
         }
+        for (int i = 0; i < values.size(); ++i) {
+            if (input_row_idx[i] == )
+        }
+        return matrix[input_size_columns*input_size_rows + input_size_rows];
+    }
+
+    double operator()(unsigned int &input_size_rows, unsigned int &input_size_columns) const override {
+        
     }
 
     void printmatrix() override {
-        for(int i=0; i<size_rows; i++){
+        for(int i=0; i < size_rows; i++){
 
         }
     }
 
 private:
 // the length of the following array is nnz (number of non-zeros)
-// the array rows of int contains their corresponding rows indices
-std::vector<int> rows;
-int current_nnz;
+// the array rows contains the row indices
+std::vector<unsigned int> rows;
 };
-
-/*
-nel main scriverai per esempio
-SparseMatrixCOO matrice1(4, 5, 6); // matrice 4x5 con 6 elementi nnz
-matrice1.setElement(0, 2, 3.1);
-matrice1.setElement(0, 4, 4);
-matrice1.setElement(1, 2, 5);
-matrice1.setElement(1, 4, 7.4);
-matrice1.setElement(3, 1, 2);
-matrice1.setElement(3, 3, 6);
-matrice1.printCOO();
-
-*/

@@ -1,5 +1,6 @@
 #ifndef SPARSE_MATRIX_CSR_HPP_
 #define SPARSE_MATRIX_CSR_HPP_
+#include "SparseMatrix.hpp"
 #include <vector>
 
 class SpareMatrixCSR : public SparseMatrix {
@@ -16,7 +17,7 @@ public:
 private:
 // the array rows_idx of int contains the cumulative number of nonzero entries up to the
 // i-th row excluded. Its length is m+1 with m number of rows of A
-std::vector<int> rows_idx;
+std::vector<unsigned int> rows_idx;
 };
 
 #endif

@@ -4,39 +4,41 @@
 
 class SparseMatrix { // abstract class
 public:
-    
-    // Defining the pure virtual methods that _COO and _CSR have in common
-    virtual int get_rows() = 0;
-    virtual int get_columns() = 0;
-    virtual int get_nonzeros() = 0;
+    // If some common methods of COO and CSR don't act the same, they're defined as virtual
+    virtual unsigned int get_num_rows() const = 0;
+    // else they're not
+    unsigned int get_num_columns() const { return cols.size(); };
+    unsigned int get_num_nnz() const { return values.size(); };
+
+    // Redefining the operator () in both const and not-const version
+    // in order to implement respectively access and write matrix entries
+    virtual double operator()(unsigned int &input_row_idx, unsigned int &input_col_idx) const = 0;
+    virtual double &operator()(unsigned int &input_row_idx, unsigned int &input_ol_idx) = 0;
+
     virtual void printmatrix() = 0;
 
-
     // Constructor
-    SparseMatrix(const int input_size_rows, const int input_size_columns);
+    SparseMatrix(const unsigned int &input_size_rows, const unsigned int &input_size_columns);
 
     // Copy constructor
     SparseMatrix(const SparseMatrix &other);
 
-    // Implement access and write matrix entries by overloading the operator ()
-    double &operator()(int &input_size_rows, int &input_size_columns);
-
     // Implement the matrix-vector product by overloading the operator *
     // SparseMatrix operator*(vettore);
-    // Destructor
-   virtual ~SparseMatrix() {
-        delete[] matrix;
-   }
+
+    // Virtual destructor
+    virtual ~SparseMatrix() { delete[] matrix; };
+
 private:
 double *matrix; //magari ci serve il puntatore?
-static unsigned int size_rows;
-static unsigned int size_columns;
+static unsigned int &size_rows;
+static unsigned int &size_columns;
 static unsigned int lunghezza;
-int nnz; //number of non zeroes!
-// the length of the following arrays is nnz (number of non-zeros)
+unsigned int nnz; //number of non zeroes
+// the length of the following two arrays is nnz (number of non-zeros)
 // the array values contains all the nonzero values
 std::vector<double> values;
-// the array columns of int contains their corresponding columns indices
-std::vector<int> cols;
+// the array columns contains their corresponding columns indices
+std::vector<unsigned int> cols;
 };
 #endif
