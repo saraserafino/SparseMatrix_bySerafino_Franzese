@@ -44,7 +44,7 @@ bool check_matrix_canonical_basis_product(matrix) {
     }
 */
 int main () {
-//const double input1[][] = {[1,0,0],[0,2,0],[1,0,0]};
+/*const double input1[][] = {[1,0,0],[0,2,0],[1,0,0]};
 SparseMatrixCOO matriceCOO(4, 5, 6); // matrice 4x5 con 6 elementi nnz
 matriceCOO.setElement(0, 2, 3.1);
 matriceCOO.setElement(0, 4, 4);
@@ -61,8 +61,12 @@ matriceCSR.setElement(1, 2, 5);
 matriceCSR.setElement(1, 4, 7.4);
 matriceCSR.setElement(3, 1, 2);
 matriceCSR.setElement(3, 3, 6);
-matriceCSR.printmatrix();
+matriceCSR.printmatrix();*/
 
+//con la cosa del Proxy del prof dovremmo poter scrivere:
+SparseMatrixCOO A{{valori}}; //solo che lui faceva Array perché non era abstract class, noi non possiamo fare SparseMatrix
+const double x = A(2, 3); // const version
+A(2, 3) = 5.7; // non-const version
 // Let's run some tests to validate the correctness of the program
     
 /*std::cout << "Does the matrix-vector product work well?" << std::endl << "Multiplying the matrix for a vector of 1 it's "

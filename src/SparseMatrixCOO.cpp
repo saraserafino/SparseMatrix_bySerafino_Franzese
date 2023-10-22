@@ -6,7 +6,7 @@ public:
     SparseMatrixCOO(const int &input_size_rows, const int &input_size_columns)
     : SparseMatrix(const int input_size_rows, const int input_size_columns) {
         rows.size() = input_size_rows;
-        cols.size() = input_size_columns;
+        columns.size() = input_size_columns;
         values.size() = nnz;
     }
     /*
