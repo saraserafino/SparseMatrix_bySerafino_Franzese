@@ -51,7 +51,7 @@ public:
 
     // Access operator for both reading and writing
     SparseMatrixProxy operator()(const unsigned int idx_row, const unsigned int idx_col) {
-        return SparseMatrixProxy([idx_row][idx_col]);
+        return SparseMatrixProxy(matrix[idx_row][idx_col]);
         // alla fine quindi come la scrivevamo la matrice?
         // che qui il prof nel costruttore di Array metteva const std::vector<double> &data: data(data)
         //  quindi nel return metteva ArrayProxy(data[idx]);
