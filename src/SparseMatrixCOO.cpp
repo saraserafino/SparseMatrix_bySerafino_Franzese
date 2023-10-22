@@ -5,7 +5,9 @@ class SparseMatrixCOO : public SparseMatrix {
 public:
     SparseMatrixCOO(const int &input_size_rows, const int &input_size_columns)
     : SparseMatrix(const int input_size_rows, const int input_size_columns) {
-
+        rows.size() = input_size_rows;
+        cols.size() = input_size_columns;
+        values.size() = nnz;
     }
     /*
 
@@ -32,7 +34,7 @@ public:
         current_nnz++;
     }
 
-    void printmatrix() override {
+    void printmatrix_COO() {
         std::cout << "values = [";
         for (int i = 0; i < nnz - 1; ++i) {
             std::cout << values[i] << ", ";
@@ -50,8 +52,9 @@ public:
         std::cout << cols[nnz - 1] << "]" << std::endl;
     }
 */
+    unsigned int get_num_rows() const override {
 
-    unsigned int get_rows() const override {}
+    }
 
     double& operator()(unsigned int &input_size_rows, unsigned int &input_size_columns) override {
         if (input_size_rows < 0 || input_size_rows >= size_rows || input_size_columns < 0 || input_size_columns >= size_columns)
@@ -59,19 +62,13 @@ public:
             throw std::out_of_range("Index out of bounds");
         }
         for (int i = 0; i < values.size(); ++i) {
-            if (input_row_idx[i] == )
+            if (rows[i] == )
         }
-        return matrix[input_size_columns*input_size_rows + input_size_rows];
+        return matrix[input_size_columns * input_size_rows + input_size_rows];
     }
 
     double operator()(unsigned int &input_size_rows, unsigned int &input_size_columns) const override {
         
-    }
-
-    void printmatrix() override {
-        for(int i=0; i < size_rows; i++){
-
-        }
     }
 
 private:

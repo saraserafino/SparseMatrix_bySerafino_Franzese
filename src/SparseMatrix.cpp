@@ -9,15 +9,18 @@ size_rows(input_size_rows), size_columns(input_size_columns) {
     lunghezza = size_rows * size_columns;
     }
     
-//copy costructor
+// Copy costructor
 SparseMatrix::SparseMatrix(const SparseMatrix &other) {
     matrix = new double[other.lunghezza];
     size_columns = other.size_columns;
     size_rows = other.size_rows;
     lunghezza = other.lunghezza;
     // il seguente penso dia problemi per il fatto che ci sono gli 0 non dichiarati, casomai da dire che se non c'è è 0
-    for (unsigned int i=0; i< lunghezza; i++){
+    for (unsigned int i = 0; i < lunghezza; i++){
         matrix[i]= other.matrix[i];
     }
     }
 
+void printmatrix() {
+    // qui vogliamo stamparla (in modo univoco) dicendo che se non ci sono valori assegnati mette 0
+}

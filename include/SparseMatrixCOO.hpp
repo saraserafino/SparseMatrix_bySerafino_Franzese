@@ -7,13 +7,13 @@
 class SparseMatrixCOO : public SparseMatrix {
 public:
 
-    unsigned int get_rows() const override;
+    unsigned int get_num_rows() const override;
     
     SparseMatrixCOO(const int &input_size_rows, const int &input_size_columns, int nnz);
     
     // Redefining the operator () in both const and not-const version
-    double &operator()(unsigned int &input_row_idx, unsigned int &input_col_idx) override;
-    double operator()(unsigned int &input_row_idx, unsigned int &input_col_idx) const override;
+    double &operator()(unsigned int &input_size_rows, unsigned int &input_size_columns) override;
+    double operator()(unsigned int &input_size_rows, unsigned int &input_size_columns) const override;
 
 private:
 // the length of the following array is nnz (number of non-zeros)
