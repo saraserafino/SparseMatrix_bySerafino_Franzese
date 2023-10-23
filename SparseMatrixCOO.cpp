@@ -13,7 +13,7 @@ SparseMatrixCOO::SparseMatrixCOO(std::vector<double>& values, std::vector<unsign
     for(auto row_idx : rows)
         if(row_idx > max)
         max = row_idx;
-    return max;
+    return max+1;
     }
 
  double& SparseMatrixCOO::operator()(int row_idx, int col_idx) {

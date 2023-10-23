@@ -16,12 +16,11 @@ unsigned int SparseMatrix::get_num_columns() const {
     if (values.empty()) {
         return 0; // Nessuna colonna se non ci sono valori
     }
-    unsigned int max=columns[0];
-    for (unsigned int i=0; i<columns[values.size()]; i++)
-    if(max<columns[i]){
-        max=columns[i];
-    }
-    return max;
+    unsigned int max = columns[0];
+  for(auto col_idx : columns)
+    if(col_idx > max)
+      max = col_idx;
+    return max+1;
 }
 
 /* Copy costructor
