@@ -25,9 +25,9 @@ public:
     //void printmatrix();
 
 protected:
-// the array values contains all the nonzero values
+// the vector values contains all the nonzero values
 std::vector<double> values;
-// the array columns contains their corresponding columns indices
+// the vector columns contains their corresponding columns indices
 std::vector<unsigned int> columns;
 };
 #endif

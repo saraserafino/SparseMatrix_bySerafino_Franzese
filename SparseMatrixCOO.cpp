@@ -4,7 +4,9 @@
 
 SparseMatrixCOO::SparseMatrixCOO(std::vector<double>& values, std::vector<unsigned int>& rows, std::vector<unsigned int>& columns)
 : SparseMatrix(values,columns), rows(rows) {}
-    
+
+// returns the number of rows of the matrix. For the way it's saved, the number of rows
+// is the maximum index of row of the non-zero values
 unsigned int SparseMatrixCOO::get_num_rows() const { 
   if (values.empty()) {
     return 0; // If there are no values, there is no row

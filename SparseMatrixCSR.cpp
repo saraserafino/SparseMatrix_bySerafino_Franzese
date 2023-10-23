@@ -3,8 +3,9 @@
 
 SparseMatrixCSR::SparseMatrixCSR(std::vector<double>& values, std::vector<unsigned int>& rows, std::vector<unsigned int>& columns)
 : SparseMatrix(values,columns), rows(rows) {}
-    
-unsigned int SparseMatrixCOO::get_num_rows() const { 
+
+// forse get_num_rows anche va in SparseMatrix perché comunque ci interessa prenderlo normale e poi creare quella strana di CSR
+unsigned int SparseMatrixCSR::get_num_rows() const { 
   if (values.empty()) {
     return 0; // If there are no values, there is no row
   }
@@ -15,13 +16,20 @@ unsigned int SparseMatrixCOO::get_num_rows() const {
   return max + 1;
 }
 
-double& SparseMatrixCOO::operator()(unsigned int row_idx, unsigned int col_idx) {
+// Creo il metodo per scrivere row_idx_CSR
+auto get_row_idx_CSR() {
+  row_idx_CSR[0] = 0; // convention
+  row_idx_CSR.resize(this->get_num_rows() + 1); // its length is 1 more than the number of rows
+  
+}
+
+double& SparseMatrixCSR::operator()(unsigned int row_idx, unsigned int col_idx) {
   if(row_idx >= this->get_num_rows() || col_idx >= this->get_num_columns()) {
     throw std::out_of_range ("Indexes out of range");
   }
 
   for(int i = 0; i < values.size(); ++i)
-    if(rows[i] == row_idx && columns[i] == col_idx) // if the indeces are present in the vectors rows and columns
+    if((devo far capire la riga) == row_idx && columns[i] == col_idx) // if the indeces are present in the vectors row_idx_CSR and columns
       return values[i]; // it returns the value
   // otherwise it adds it and returns the new value
   rows.push_back(row_idx);
@@ -31,7 +39,7 @@ double& SparseMatrixCOO::operator()(unsigned int row_idx, unsigned int col_idx) 
 }
 
 // Same as above but since now it's const, it doesn't return the reference but the value
-double SparseMatrixCOO::operator()(unsigned int row_idx, unsigned int col_idx) const {
+double SparseMatrixCSR::operator()(unsigned int row_idx, unsigned int col_idx) const {
   if(row_idx >= this->get_num_rows() || col_idx >= this->get_num_columns()) {
     throw std::out_of_range ("Indexes out of range");
   }
@@ -42,24 +50,6 @@ double SparseMatrixCOO::operator()(unsigned int row_idx, unsigned int col_idx) c
 
   return 0.0;
 }
-
-
-        row_idx.resize(size_rows + 1, 0); // initialize row_idx with 0
-        current_nnz = 0;
-
-    void setElement(int index_row, int index_col, double value) {
-        if (index_row < 0 || index_row >= size_rows || index_col < 0 || index_col >= size_columns)
-        {
-            throw std::out_of_range("Index out of bounds.");
-        }
-        if (current_nnz >= nnz) {
-            throw std::overflow_error("Too many non-zeros.");
-        }
-        values[current_nnz] = value;
-        cols[current_nnz] = index_col;
-        current_nnz++; 
-        row_idx[index_row + 1]++;
-    }
 
     void printmatrix() override {
         std::cout << "values = [";
