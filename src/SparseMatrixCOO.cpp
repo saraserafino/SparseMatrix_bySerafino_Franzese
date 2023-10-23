@@ -1,78 +1,45 @@
 #include "SparseMatrixCOO.hpp"
 #include <vector>
 #include <iostream>
-class SparseMatrixCOO : public SparseMatrix {
-public:
-    SparseMatrixCOO(const int &input_size_rows, const int &input_size_columns)
-    : SparseMatrix(const int input_size_rows, const int input_size_columns) {
-        rows.size() = input_size_rows;
-        columns.size() = input_size_columns;
-        values.size() = nnz;
-    }
-    /*
 
-   SparseMatrixCOO(const int &input_size_rows, const int &input_size_columns, int nnz)
-    : size_rows(input_size_rows), size_columns(input_size_columns), nnz(nnz)
-    {
-        values.resize(nnz);
-        rows.resize(nnz);
-        cols.resize(nnz);
-        current_nnz = 0;
+SparseMatrixCOO::SparseMatrixCOO(std::vector<double>& values, std::vector<unsigned int>& rows, std::vector<unsigned int>& columns):
+  SparseMatrix(values,columns),rows(rows){}
+    
+    unsigned int SparseMatrixCOO::get_num_rows() const { 
+          if (values.empty()) {
+        return 0; // Nessuna colonna se non ci sono valori
+    }  
+    unsigned int max=rows[0];
+    for(auto row_idx : rows)
+        if(row_idx > max)
+        max = row_idx;
+    return max;
     }
 
-    void setElement(int index_row, int index_col, double value) {
-        if (index_row < 0 || index_row >= size_rows || index_col < 0 || index_col >= size_columns)
-        {
-            throw std::out_of_range("Index out of bounds.");
-        }
-        if (current_nnz >= nnz) {
-            throw std::overflow_error("Too many non-zeros.");
-        }
-        values[current_nnz] = value;
-        rows[current_nnz] = index_row;
-        cols[current_nnz] = index_col;
-        current_nnz++;
-    }
+ double& SparseMatrixCOO::operator()(int row_idx, int col_idx) {
+ if(row_idx >= this->get_num_rows() || col_idx >= this->get_num_columns()){
+    throw std::out_of_range ("Indexes out of range");
+  }
 
-    void printmatrix_COO() {
-        std::cout << "values = [";
-        for (int i = 0; i < nnz - 1; ++i) {
-            std::cout << values[i] << ", ";
-        }
-        std::cout << values[nnz - 1] << "]" << std::endl;
-        std::cout << "rows = [";
-        for (int i = 0; i < nnz - 1; ++i) {
-            std::cout << rows[i] << ", ";
-        }
-        std::cout << rows[nnz - 1] << "]" << std::endl;
-        std::cout << "columns = [";
-        for (int i = 0; i < nnz - 1; ++i) {
-            std::cout << cols[i] << ", ";
-        }
-        std::cout << cols[nnz - 1] << "]" << std::endl;
-    }
-*/
-    unsigned int get_num_rows() const override {
+  for(int i = 0; i < values.size(); i++)
+    if(rows[i] == row_idx && columns[i] == col_idx)
+      return values[i]; //ritorna il valore se gli indici sono presenti nei vettori rows e columns
 
-    }
+  rows.push_back(row_idx); //altrimenti aggiungilo e ritorna il nuovo valore
+  columns.push_back(col_idx);
+  values.push_back(0.0); // valore di default zero, poi verrà modificato
+  return values.back();
+}
 
-    double& operator()(unsigned int &input_size_rows, unsigned int &input_size_columns) override {
-        if (input_size_rows < 0 || input_size_rows >= size_rows || input_size_columns < 0 || input_size_columns >= size_columns)
-        {
-            throw std::out_of_range("Index out of bounds");
-        }
-        for (int i = 0; i < values.size(); ++i) {
-            if (rows[i] == )
-        }
-        return matrix[input_size_columns * input_size_rows + input_size_rows];
-    }
+double SparseMatrixCOO::operator()(int row_idx, int col_idx) const { // qua è marcato const quindi non occorre ritornare la reference ma 
+  if(row_idx >= this->get_num_rows() || col_idx >= this->get_num_columns()){ // basta il valore
+    throw std::out_of_range ("Indexes out of range");
+  }
 
-    double operator()(unsigned int &input_size_rows, unsigned int &input_size_columns) const override {
-        
-    }
+  for(int i = 0; i < values.size(); i++)
+    if(rows[i] == row_idx && columns[i] == col_idx)
+      return values[i];
 
-private:
-// the length of the following array is nnz (number of non-zeros)
-// the array rows contains the row indices
-std::vector<unsigned int> rows;
-};
+  return 0.0;
+
+}
