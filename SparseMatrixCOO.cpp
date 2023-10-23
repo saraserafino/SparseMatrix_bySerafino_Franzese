@@ -23,32 +23,36 @@ unsigned int SparseMatrixCOO::get_num_rows() const {
   return max + 1;
   basta scrivere la riga return *std::max_element(rows.begin(), rows.end()) + 1     dove
   il * serve perché così punta a quel valore (MA non è un puntatore). (row.begin, row.end) è l'intervallo
+  Già che cancellerai questo commento ne approfitto per dirti qui che ho cambiato tutti i row_idx e col_idx
+  in input_row_idx e input_col_idx per rendere un po' più comprensibile visto che anche in CSR si chiama row_idx
+  e poi ricordo che anche il prof aveva scritto input_qualcosa. Insomma questo input_ è quello che scrivi da tastiera quando inserisci
   */
 }
 
-double& SparseMatrixCOO::operator()(unsigned int row_idx, unsigned int col_idx) {
-  if(row_idx >= this->get_num_rows() || col_idx >= this->get_num_columns()) {
+double& SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int input_col_idx) {
+  if(input_row_idx >= this->get_num_rows() || input_col_idx >= this->get_num_columns()) {
     throw std::out_of_range ("Indexes out of range");
   }
 
   for(int i = 0; i < values.size(); ++i)
-    if(rows[i] == row_idx && columns[i] == col_idx) // if the indeces are present in the vectors rows and columns
+    // if the indexes are present in the vectors rows and columns
+    if(rows[i] == input_row_idx && columns[i] == input_col_idx)
       return values[i]; // it returns the value
   // otherwise it adds it and returns the new value
-  rows.push_back(row_idx);
-  columns.push_back(col_idx);
+  rows.push_back(input_row_idx);
+  columns.push_back(input_col_idx);
   values.push_back(0.0); // default value of 0 that will be changed later
   return values.back();
 }
 
 // Same as above but since now it's const, it doesn't return the reference but the value
-double SparseMatrixCOO::operator()(unsigned int row_idx, unsigned int col_idx) const {
-  if(row_idx >= this->get_num_rows() || col_idx >= this->get_num_columns()) {
+double SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int input_col_idx) const {
+  if(input_row_idx >= this->get_num_rows() || input_col_idx >= this->get_num_columns()) {
     throw std::out_of_range ("Indexes out of range");
   }
 
   for(int i = 0; i < values.size(); ++i)
-    if(rows[i] == row_idx && columns[i] == col_idx)
+    if(rows[i] == input_row_idx && columns[i] == input_col_idx)
       return values[i];
 
   return 0.0;

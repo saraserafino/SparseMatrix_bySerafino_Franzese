@@ -9,8 +9,8 @@ public:
 
     // If some common methods of COO and CSR don't act the same, they're defined as virtual
     virtual unsigned int get_num_rows() const = 0;
-    virtual double& operator()(unsigned int row_idx, unsigned int col_idx) = 0;
-    virtual double operator()(unsigned int row_idx, unsigned int col_idx) const = 0;
+    virtual double& operator()(unsigned int input_row_idx, unsigned int input_col_idx) = 0;
+    virtual double operator()(unsigned int input_row_idx, unsigned int input_col_idx) const = 0;
     // else they're not and we define them only in SparseMatrix
     unsigned int get_num_columns() const;
     unsigned int get_num_nnz() const;
