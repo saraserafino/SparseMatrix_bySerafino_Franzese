@@ -2,25 +2,25 @@
 #include <iostream>
 
 // Constructor
-SparseMatrix::SparseMatrix(std::vector<double>& values, std::vector<unsigned int>& columns): values{values}, columns{columns}{}
+SparseMatrix::SparseMatrix(std::vector<double>& values, std::vector<unsigned int>& columns)
+: values{values}, columns{columns} {}
 
-
-//ritorna il numero di elementi non nulli
+// returns the number of non-zero elements
 unsigned int SparseMatrix::get_num_nnz() const {
     return values.size();
     }
 
-//ritorna il numero di colonne della matrice (per come è salvata, il numero di colonne è il massimo indice di colonna dei
-//numeri non nulli)
+// returns the number of columns of the matrix. For the way it's saved, the number of columns
+// is the maximum index of column of the non-zero values
 unsigned int SparseMatrix::get_num_columns() const {
     if (values.empty()) {
-        return 0; // Nessuna colonna se non ci sono valori
+        return 0; // If there are no values, there is no column
     }
     unsigned int max = columns[0];
-  for(auto col_idx : columns)
-    if(col_idx > max)
-      max = col_idx;
-    return max+1;
+    for(auto col_idx : columns)
+        if(col_idx > max)
+        max = col_idx;
+    return max + 1;
 }
 
 /* Copy costructor
