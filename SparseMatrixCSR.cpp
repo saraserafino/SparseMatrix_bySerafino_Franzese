@@ -21,8 +21,8 @@ double& SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inp
   // and if the index of the column is already present
   // Example: given row_idx{0,2,4} and A(2,2); it checks if row_idx[2] - row_idx[1] > 0
   // which is true because 4 - 2 = 2 > 0 (it even says there are 2 non-zero values)
+  
   // in realtà dovrei mettere un check che non siano già stati inseriti tutti i nnz disponibili
-  // o forse no perché se anche sono già stati inseriti, con la cosa dopo inserisco nuovi valori??
     if((row_idx[input_row_idx] - row_idx[input_row_idx - 1]) > 0 && columns[i] == input_col_idx)
       return values[i]; // it returns the value
   // otherwise it adds it and returns the new value

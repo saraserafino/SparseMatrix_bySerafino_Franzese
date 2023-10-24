@@ -19,8 +19,8 @@ unsigned int SparseMatrix::get_num_columns() const {
     return *std::max_element(columns.begin(), columns.end()) + 1;
 }
 
-void print_cute_matrix() {
-// se non c'è nessun elemento là printa 0
+void SparseMatrix::print_cute_matrix() {
+    // se non c'è nessun elemento là printa 0
 }
 /* Copy costructor
 SparseMatrix::SparseMatrix(const SparseMatrix &other) {

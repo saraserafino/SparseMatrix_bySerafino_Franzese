@@ -12,7 +12,7 @@ unsigned int SparseMatrixCOO::get_num_rows() const {
     return 0; // If there are no values, there is no row
   }
   return *std::max_element(rows.begin(), rows.end()) + 1;
-  /* Saverio dopo che hai letto questo commento fra /* cancellalo che era solo per spiegarti
+  /* Saverio dopo che hai letto questo commento cancellalo che era solo per spiegarti
   nel caso non ricordassi che lo abbiamo visto a lezione
   Praticamente invece che fare
   unsigned int max = rows[0];
