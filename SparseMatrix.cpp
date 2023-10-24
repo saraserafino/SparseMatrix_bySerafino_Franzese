@@ -15,15 +15,7 @@ unsigned int SparseMatrix::get_num_nnz() const {
 unsigned int SparseMatrix::get_num_columns() const {
     return values.empty() ? 0 : (*std::max_element(columns.begin(), columns.end()) + 1);
 }
-/*
-void SparseMatrix::print_cute_matrix() {
-    if ()    // if the matrix is CSR, convert it
-        matrix.convert();
-    
-    // stampa a partire dalla COO
-    // se non c'è nessun elemento printa 0
-}
-*/
+
 /* Copy costructor
 SparseMatrix::SparseMatrix(const SparseMatrix &other) {
     matrix = new double[other.lunghezza];

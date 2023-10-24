@@ -79,3 +79,11 @@ void SparseMatrixCSR::convert() {
   std::cout << "The matrix converted in COO is:" << std::endl;
   matrix_converted.print_matrix();
 }
+
+void SparseMatrixCSR::print_cute_matrix() {
+  SparseMatrixCSR matrixCSR(values, row_idx, columns);
+  matrixCSR.convert();
+  
+    // stampa a partire dalla COO
+    // se non c'è nessun elemento printa 0
+}

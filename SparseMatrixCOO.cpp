@@ -1,7 +1,7 @@
 #include "SparseMatrixCOO.hpp"
 #include "SparseMatrixCSR.hpp" // we need it for the convert method
 #include <iostream>
-#include <algorithm> // for using max_element
+#include <algorithm> // for using max_element and sort
 
 SparseMatrixCOO::SparseMatrixCOO(std::vector<double>& values, std::vector<unsigned int>& rows, std::vector<unsigned int>& columns)
 : SparseMatrix(values,columns), rows(rows) {}
@@ -73,6 +73,29 @@ double SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int inpu
 }
 
 void SparseMatrixCOO::print_matrix() {
+  // Order the matrix in a way where the rows are increasing
+  /* non so bene come fare perché facendo sort di rows devo comunque
+   spostare anche i valori di columns e values ma non mi viene come
+  SparseMatrixCOO original_matrix(values, rows, columns);
+  std::vector<double> new_values;
+  std::vector<unsigned int> new_rows;
+  std::vector<unsigned int> new_columns;
+  SparseMatrixCOO new_matrix(new_values, new_rows, new_columns);
+
+  std::cout << "values = [";
+  for (int i = 0; i < values.size() - 1; ++i)
+    std::cout << new_values[i] << ", ";
+  std::cout << new_values[values.size() - 1] << "]" << std::endl;
+  std::cout << "rows = [";
+  for (int i = 0; i < rows.size() - 1; ++i)
+    std::cout << new_rows[i] << ", ";
+  std::cout << new_rows[rows.size() - 1] << "]" << std::endl;
+  std::cout << "columns = [";
+  for (int i = 0; i < columns.size() - 1; ++i)
+    std::cout << new_columns[i] << ", ";
+  std::cout << new_columns[columns.size() - 1] << "]" << std::endl;
+  */
+  // questo funziona ma non tiene conto del dover ordinare
   std::cout << "values = [";
   for (int i = 0; i < values.size() - 1; ++i)
     std::cout << values[i] << ", ";
@@ -100,3 +123,14 @@ void SparseMatrixCOO::convert() {
   std::cout << "The matrix converted in CSR is:" << std::endl;
   matrix_converted.print_matrix();
 }
+/*
+void SparseMatrixCOO::print_cute_matrix() {
+  for (int i = 0; i < rows.size(); ++i) {
+    for (int j = 0; j < columns.size(); ++j) {
+      // il problema è che inizialmente le righe sono ordinate ma quando poi aggiungo valori no
+      // forse dovremmo anche ordinare la stampa di COO di modo che le righe siano crescenti
+    }
+  }
+    // se non c'è nessun elemento printa 0
+}
+*/
