@@ -1,4 +1,5 @@
 #include "SparseMatrixCOO.hpp"
+#include "SparseMatrixCSR.hpp" // we need it for the convert method
 #include <iostream>
 #include <algorithm> // for using max_element
 
@@ -70,4 +71,18 @@ void SparseMatrixCOO::print_matrix() {
   for (int i = 0; i < columns.size() - 1; ++i)
     std::cout << columns[i] << ", ";
   std::cout << columns[columns.size() - 1] << "]" << std::endl;
+}
+
+void SparseMatrixCOO::convert() {
+  std::vector<unsigned int> row_converted;
+  row_converted.resize(this->get_num_rows() + 1, 0);
+  // Count the number of nnz elements in each row
+  for (int i = 0; i < values.size(); ++i)
+    row_converted[rows[i] + 1]++;
+  // Cumulative sum for obtaining row_idx
+  for (int i = 2; i < row_converted.size(); ++i)
+    row_converted[i] += row_converted[i - 1];
+  SparseMatrixCSR matrix_converted(values, row_converted, columns);
+  std::cout << "The matrix converted in CSR is:" << std::endl;
+  matrix_converted.print_matrix();
 }

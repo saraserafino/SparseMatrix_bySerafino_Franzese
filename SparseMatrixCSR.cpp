@@ -1,4 +1,5 @@
 #include "SparseMatrixCSR.hpp"
+#include "SparseMatrixCOO.hpp" // we need it for the convert method
 #include <iostream>
 
 SparseMatrixCSR::SparseMatrixCSR(std::vector<double>& values, std::vector<unsigned int>& row_idx, std::vector<unsigned int>& columns)
@@ -21,13 +22,15 @@ double& SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inp
   // and if the index of the column is already present
   // Example: given row_idx{0,2,4} and A(2,2); it checks if row_idx[2] - row_idx[1] > 0
   // which is true because 4 - 2 = 2 > 0 (it even says there are 2 non-zero values)
-  
+
   // in realtà dovrei mettere un check che non siano già stati inseriti tutti i nnz disponibili
+  // oltretutto non funziona come vorrei perché se da tastiera chiedo A(2,2) mi dà 3.1 anziché 0 (matrice del prof)
+  // e quando sovrascrivo appunto cambia il suo valore, quindi devo aver sbagliato qualcosa quando gli dò la riga
     if((row_idx[input_row_idx] - row_idx[input_row_idx - 1]) > 0 && columns[i] == input_col_idx)
       return values[i]; // it returns the value
   // otherwise it adds it and returns the new value
   for(int i = input_row_idx; i < row_idx.size(); ++i) // starting from the row in which a new nnz is inserted
-    row_idx[i] += 1; // increment of 1 the value of row_idx[i]
+    row_idx[i]++; // increment the value of row_idx[i]
   columns.push_back(input_col_idx);
   values.push_back(0.0); // default value of 0 that will be changed later
   return values.back();
@@ -59,4 +62,20 @@ void SparseMatrixCSR::print_matrix() {
   for (int i = 0; i < row_idx.size() - 1; ++i)
     std::cout << row_idx[i] << ", ";
   std::cout << row_idx[row_idx.size() - 1] << "]" << std::endl;
+}
+
+void SparseMatrixCSR::convert() {
+  std::vector<unsigned int> rows;
+  std::vector<unsigned int> num_nnz;
+  rows.resize(this->get_num_rows(), 0);
+  for (int i = 0; i < values.size(); ++i) {
+    // Count the number of nnz elements in each row
+    num_nnz[i] = row_idx[i + 1] - row_idx[i];
+    // Allocate the row indixes
+    for (int j = i; j < num_nnz[i]; ++j)
+      rows[j] = i;
+  }
+  SparseMatrixCOO matrix_converted(values, rows, columns);
+  std::cout << "The matrix converted in COO is:" << std::endl;
+  matrix_converted.print_matrix();
 }
