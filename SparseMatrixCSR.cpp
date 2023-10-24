@@ -5,11 +5,8 @@
 SparseMatrixCSR::SparseMatrixCSR(std::vector<double>& values, std::vector<unsigned int>& row_idx, std::vector<unsigned int>& columns)
 : SparseMatrix(values,columns), row_idx(row_idx) {}
 
-unsigned int SparseMatrixCSR::get_num_rows() const { 
-  if (values.empty()) {
-    return 0; // If there are no values, there is no row
-  }
-  return row_idx.size() - 1;
+unsigned int SparseMatrixCSR::get_num_rows() const {
+  return values.empty() ? 0 : (row_idx.size() - 1);
 }
 
 double& SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int input_col_idx) {
@@ -67,23 +64,28 @@ void SparseMatrixCSR::print_matrix() {
 void SparseMatrixCSR::convert() {
   std::vector<unsigned int> rows;
   std::vector<unsigned int> num_nnz;
-  rows.resize(this->get_num_rows(), 0);
-  for (int i = 0; i < values.size(); ++i) {
+  rows.resize(values.size(), 0);
+  for (int i = 0; i < row_idx.size(); ++i) {
     // Count the number of nnz elements in each row
     num_nnz[i] = row_idx[i + 1] - row_idx[i];
-    // Allocate the row indixes
-    for (int j = i; j < num_nnz[i]; ++j)
-      rows[j] = i;
+  }
+  //sto ancora pensando a questa cosa
+  for (int i = 0; i < values.size(); ++i) {
+    for (int j = i; j < num_nnz[i]; ++j) {
+      // Allocate the row indexes
+      rows[i] = j;
+    }
   }
   SparseMatrixCOO matrix_converted(values, rows, columns);
   std::cout << "The matrix converted in COO is:" << std::endl;
   matrix_converted.print_matrix();
 }
-
+/*
 void SparseMatrixCSR::print_cute_matrix() {
-  SparseMatrixCSR matrixCSR(values, row_idx, columns);
-  matrixCSR.convert();
-  
-    // stampa a partire dalla COO
+  for (int i = 0; i < this->get_num_rows(); ++i) {
+    for (int j = 0; j < columns.size(); ++j) {
+
+    }
+  }
     // se non c'è nessun elemento printa 0
-}
+}*/
