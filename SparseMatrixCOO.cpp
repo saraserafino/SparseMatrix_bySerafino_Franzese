@@ -25,7 +25,8 @@ unsigned int SparseMatrixCOO::get_num_rows() const {
   il * serve perché così punta a quel valore (MA non è un puntatore). (row.begin, row.end) è l'intervallo
   Già che cancellerai questo commento ne approfitto per dirti qui che ho cambiato tutti i row_idx e col_idx
   in input_row_idx e input_col_idx per rendere un po' più comprensibile visto che anche in CSR si chiama row_idx
-  e poi ricordo che anche il prof aveva scritto input_qualcosa. Insomma questo input_ è quello che scrivi da tastiera quando inserisci
+  e poi ricordo che anche il prof aveva scritto input_qualcosa.
+  Insomma questo input_ è quello che scrivi da tastiera quando inserisci
   */
 }
 
