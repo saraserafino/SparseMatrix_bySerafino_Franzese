@@ -63,17 +63,13 @@ void SparseMatrixCSR::print_matrix() {
 
 void SparseMatrixCSR::convert() {
   std::vector<unsigned int> rows;
-  std::vector<unsigned int> num_nnz;
   rows.resize(values.size(), 0);
-  for (int i = 0; i < row_idx.size(); ++i) {
-    // Count the number of nnz elements in each row
-    num_nnz[i] = row_idx[i + 1] - row_idx[i];
-  }
-  //sto ancora pensando a questa cosa
+  int j = 0;
   for (int i = 0; i < values.size(); ++i) {
-    for (int j = i; j < num_nnz[i]; ++j) {
+    while (j < row_idx[i + 1]) { // while new non-zero values are present
       // Allocate the row indexes
-      rows[i] = j;
+      rows[j] = i;
+      j++;
     }
   }
   SparseMatrixCOO matrix_converted(values, rows, columns);
