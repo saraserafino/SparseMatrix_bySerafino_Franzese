@@ -13,15 +13,17 @@ unsigned int SparseMatrix::get_num_nnz() const {
 // returns the number of columns of the matrix. For the way it's saved, the number of columns
 // is the maximum index of column of the non-zero values
 unsigned int SparseMatrix::get_num_columns() const {
-    if (values.empty()) {
-        return 0; // If there are no values, there is no column
-    }
-    return *std::max_element(columns.begin(), columns.end()) + 1;
+    return values.empty() ? 0 : (*std::max_element(columns.begin(), columns.end()) + 1);
 }
-
+/*
 void SparseMatrix::print_cute_matrix() {
-    // se non c'è nessun elemento là printa 0
+    if ()    // if the matrix is CSR, convert it
+        matrix.convert();
+    
+    // stampa a partire dalla COO
+    // se non c'è nessun elemento printa 0
 }
+*/
 /* Copy costructor
 SparseMatrix::SparseMatrix(const SparseMatrix &other) {
     matrix = new double[other.lunghezza];

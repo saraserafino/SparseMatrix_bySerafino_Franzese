@@ -8,27 +8,40 @@ SparseMatrixCOO::SparseMatrixCOO(std::vector<double>& values, std::vector<unsign
 
 // returns the number of rows of the matrix. For the way it's saved,
 // the number of rows is the maximum index of row of the non-zero values
-unsigned int SparseMatrixCOO::get_num_rows() const { 
+unsigned int SparseMatrixCOO::get_num_rows() const {
+  return values.empty() ? 0 : (*std::max_element(rows.begin(), rows.end()) + 1);
+}
+  /* Saverio dopo che hai letto questo commento cancellalo che era solo per spiegarti 
+  Praticamente partivamo da
+  
   if (values.empty()) {
     return 0; // If there are no values, there is no row
   }
-  return *std::max_element(rows.begin(), rows.end()) + 1;
-  /* Saverio dopo che hai letto questo commento cancellalo che era solo per spiegarti
-  nel caso non ricordassi che lo abbiamo visto a lezione
-  Praticamente invece che fare
   unsigned int max = rows[0];
   for(auto row_idx : rows)
     if(row_idx > max)
       max = row_idx;
   return max + 1;
-  basta scrivere la riga return *std::max_element(rows.begin(), rows.end()) + 1     dove
-  il * serve perché così punta a quel valore (MA non è un puntatore). (row.begin, row.end) è l'intervallo
+
+  Invece che fare da unsigned in poi, basta sostituire con
+  return *std::max_element(rows.begin(), rows.end()) + 1     dove
+  il * serve perché così punta a quel valore (MA non è un puntatore). (row.begin, row.end) è l'intervallo.
+  Ok quindi ora avremmo
+
+  if (values.empty()) {
+    return 0; // If there are no values, there is no row
+  }
+  return *std::max_element(rows.begin(), rows.end()) + 1;
+
+  Che come visto nella lezione di martedì si può ulteriormente ridurre scrivendo quello che
+  effettivamente ho scritto. Praticamente se è vera la cosa prima di ? ti ritorna il primo
+  valore (qui 0), se no ti ritorna il secondo (qui *std...)
+
   Già che cancellerai questo commento ne approfitto per dirti qui che ho cambiato tutti i row_idx e col_idx
   in input_row_idx e input_col_idx per rendere un po' più comprensibile visto che anche in CSR si chiama row_idx
   e poi ricordo che anche il prof aveva scritto input_qualcosa.
   Insomma questo input_ è quello che scrivi da tastiera quando inserisci
   */
-}
 
 double& SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int input_col_idx) {
   if(input_row_idx >= this->get_num_rows() || input_col_idx >= this->get_num_columns()) {
