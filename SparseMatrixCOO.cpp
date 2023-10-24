@@ -12,7 +12,7 @@ unsigned int SparseMatrixCOO::get_num_rows() const {
   return values.empty() ? 0 : (*std::max_element(rows.begin(), rows.end()) + 1);
 }
   /* Saverio dopo che hai letto questo commento cancellalo che era solo per spiegarti 
-  Praticamente partivamo da
+  Praticamente qua sopra nel get_num_rows partivamo da
   
   if (values.empty()) {
     return 0; // If there are no values, there is no row
@@ -52,10 +52,19 @@ double& SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int inp
     // if the indexes are present in the vectors rows and columns
     if(rows[i] == input_row_idx && columns[i] == input_col_idx)
       return values[i]; // it returns the value
-  // otherwise it adds it and returns the new value
-  rows.push_back(input_row_idx);
-  columns.push_back(input_col_idx);
-  values.push_back(0.0); // default value of 0 that will be changed later
+  // otherwise it adds it and returns the new value, keeping an
+  // increasing order in rows (and consequently values and columns)
+  // Compute the right position in which to insert
+  int position = 0;
+  for (int i = 0; i < rows.size(); ++i) {
+    if(rows[i] == input_row_idx + 1) {
+      position = i;
+      break;
+    }
+  }
+  rows.insert(rows.begin() + position, input_row_idx);
+  columns.insert(columns.begin() + position, input_col_idx);
+  values.insert(values.begin() + position, 0.0); // default value of 0 that will be changed later
   return values.back();
 }
 
@@ -73,29 +82,6 @@ double SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int inpu
 }
 
 void SparseMatrixCOO::print_matrix() {
-  // Order the matrix in a way where the rows are increasing
-  /* non so bene come fare perché facendo sort di rows devo comunque
-   spostare anche i valori di columns e values ma non mi viene come
-  SparseMatrixCOO original_matrix(values, rows, columns);
-  std::vector<double> new_values;
-  std::vector<unsigned int> new_rows;
-  std::vector<unsigned int> new_columns;
-  SparseMatrixCOO new_matrix(new_values, new_rows, new_columns);
-
-  std::cout << "values = [";
-  for (int i = 0; i < values.size() - 1; ++i)
-    std::cout << new_values[i] << ", ";
-  std::cout << new_values[values.size() - 1] << "]" << std::endl;
-  std::cout << "rows = [";
-  for (int i = 0; i < rows.size() - 1; ++i)
-    std::cout << new_rows[i] << ", ";
-  std::cout << new_rows[rows.size() - 1] << "]" << std::endl;
-  std::cout << "columns = [";
-  for (int i = 0; i < columns.size() - 1; ++i)
-    std::cout << new_columns[i] << ", ";
-  std::cout << new_columns[columns.size() - 1] << "]" << std::endl;
-  */
-  // questo funziona ma non tiene conto del dover ordinare
   std::cout << "values = [";
   for (int i = 0; i < values.size() - 1; ++i)
     std::cout << values[i] << ", ";
@@ -127,8 +113,7 @@ void SparseMatrixCOO::convert() {
 void SparseMatrixCOO::print_cute_matrix() {
   for (int i = 0; i < rows.size(); ++i) {
     for (int j = 0; j < columns.size(); ++j) {
-      // il problema è che inizialmente le righe sono ordinate ma quando poi aggiungo valori no
-      // forse dovremmo anche ordinare la stampa di COO di modo che le righe siano crescenti
+
     }
   }
     // se non c'è nessun elemento printa 0
