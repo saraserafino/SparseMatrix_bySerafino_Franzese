@@ -1,7 +1,7 @@
 #include "SparseMatrixCOO.hpp"
 #include "SparseMatrixCSR.hpp" // we need it for the convert method
 #include <iostream>
-#include <algorithm> // for using max_element and sort
+#include <algorithm> // for using max_element
 
 SparseMatrixCOO::SparseMatrixCOO(std::vector<double>& values, std::vector<unsigned int>& rows, std::vector<unsigned int>& columns)
 : SparseMatrix(values,columns), rows(rows) {}
@@ -53,7 +53,7 @@ double& SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int inp
     if(rows[i] == input_row_idx && columns[i] == input_col_idx)
       return values[i]; // it returns the value
   // otherwise it adds it and returns the new value, keeping an
-  // increasing order in rows (and consequently values and columns)
+  // increasing order in rows (and consequently values and columns).
   // Compute the right position in which to insert
   int position = 0;
   for (int i = 0; i < rows.size(); ++i) {
@@ -62,10 +62,15 @@ double& SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int inp
       break;
     }
   }
+  // commentino su quanto fatto sotto, poi cancella il commento.
+  // la prima roba fra parentesi è il posto in cui aggiungi (inizio+position),
+  // la seconda è il valore che aggiungi
   rows.insert(rows.begin() + position, input_row_idx);
   columns.insert(columns.begin() + position, input_col_idx);
   values.insert(values.begin() + position, 0.0); // default value of 0 that will be changed later
-  return values.back();
+  return values.back(); // returns a reference to the last element in values
+  // aspe però vuol dire che la reference è all'ultimo inteso tail che ora che ho ordinato
+  // non c'entra un cazzo. Che si fa?
 }
 
 // Same as above but since now it's const, it doesn't return the reference but the value
