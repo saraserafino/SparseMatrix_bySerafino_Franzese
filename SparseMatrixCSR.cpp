@@ -1,5 +1,5 @@
 #include "SparseMatrixCSR.hpp"
-#include <vector>
+#include <iostream>
 
 SparseMatrixCSR::SparseMatrixCSR(std::vector<double>& values, std::vector<unsigned int>& row_idx, std::vector<unsigned int>& columns)
 : SparseMatrix(values,columns), row_idx(row_idx) {}
@@ -45,26 +45,18 @@ double SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inpu
 
   return 0.0;
 }
-/* NON CANCELLARE che potrebbe tornare utile per stampare in modo COO
-    void printmatrix() override {
-        std::cout << "values = [";
-        for (int i = 0; i < nnz - 1; ++i) {
-            std::cout << values[i] << ", ";
-        }
-        std::cout << values[nnz - 1] << "]" << std::endl;
-        std::cout << "columns = [";
-        for (int i = 0; i < nnz - 1; ++i) {
-            std::cout << cols[i] << ", ";
-        }
-        std::cout << cols[nnz - 1] << "]" << std::endl;
-        // Calculate the cumulative sum in row_idx
-        for (int i = 1; i <= index_row; ++i) {
-            row_idx[i] += row.idx[i - 1];
-        }
-        std::cout << "row_idx = [";
-        for (int i = 0; i <= index_row - 1; ++i) {
-            std::cout << row_idx[i] << ", ";
-        }
-        std::cout << row_idx[index_row] << "]" << std::endl;
-    }
-*/
+
+void SparseMatrixCSR::print_matrix() {
+  std::cout << "values = [";
+  for (int i = 0; i < values.size() - 1; ++i)
+    std::cout << values[i] << ", ";
+  std::cout << values[values.size() - 1] << "]" << std::endl;
+  std::cout << "columns = [";
+  for (int i = 0; i < columns.size() - 1; ++i)
+    std::cout << columns[i] << ", ";
+  std::cout << columns[columns.size() - 1] << "]" << std::endl;
+  std::cout << "row_idx = [";
+  for (int i = 0; i < row_idx.size() - 1; ++i)
+    std::cout << row_idx[i] << ", ";
+  std::cout << row_idx[row_idx.size() - 1] << "]" << std::endl;
+}

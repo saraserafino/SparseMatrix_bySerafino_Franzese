@@ -1,5 +1,4 @@
 #include "SparseMatrixCOO.hpp"
-#include <vector>
 #include <iostream>
 #include <algorithm> // for using max_element
 
@@ -56,4 +55,19 @@ double SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int inpu
       return values[i];
 
   return 0.0;
+}
+
+void SparseMatrixCOO::print_matrix() {
+  std::cout << "values = [";
+  for (int i = 0; i < values.size() - 1; ++i)
+    std::cout << values[i] << ", ";
+  std::cout << values[values.size() - 1] << "]" << std::endl;
+  std::cout << "rows = [";
+  for (int i = 0; i < rows.size() - 1; ++i)
+    std::cout << rows[i] << ", ";
+  std::cout << rows[rows.size() - 1] << "]" << std::endl;
+  std::cout << "columns = [";
+  for (int i = 0; i < columns.size() - 1; ++i)
+    std::cout << columns[i] << ", ";
+  std::cout << columns[columns.size() - 1] << "]" << std::endl;
 }

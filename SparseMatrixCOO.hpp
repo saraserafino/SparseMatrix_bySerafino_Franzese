@@ -11,6 +11,7 @@ public:
     unsigned int get_num_rows() const override;
     double& operator()(unsigned int input_row_idx, unsigned int input_col_idx) override;
     double operator()(unsigned int input_row_idx, unsigned int input_col_idx) const override;
+    void print_matrix() override;
 
 private:
 // the vector rows contains the row indices
