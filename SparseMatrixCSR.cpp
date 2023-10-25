@@ -93,17 +93,13 @@ void SparseMatrixCSR::print_cute_matrix() {
     else { std::cout << "0  "; } // otherwise print 0
     idx++;
   }
-  // if nnz of a row are finished but the row was not
-  if(k == row_idx.back() + 1 && columns[j] != idx) {
-      for(int g = 0; g < columns.size(); ++g) {
-        std::cout << "0  ";
+  // if nnz values of a row are finished but the row was not
+  if(k == row_idx[i + 1]) {
+    while(idx < this->get_num_columns()) {
+        std::cout << "0  "; // print 0 until the row ends
         idx++;
       }
   }
-  std::cout << "\n"; // at the end of every row, start a new line
-  // if there are no new values in a row, print a line of 0
-  if(row_idx[i + 1] - row_idx[i] == 0)
-    for (int g = 0; g < row_idx.size(); ++g)
-      std::cout << "0  ";
+  std::cout << "\n";
   }
 }
