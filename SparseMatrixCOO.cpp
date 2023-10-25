@@ -92,6 +92,7 @@ std::vector<double>& SparseMatrixCOO::operator* (const std::vector<double>& vect
   for (int i_row = 0; i_row < this->get_num_rows(); ++i_row) {
     // finché effettivamente sono in quella riga (nell'esempio i primi due value sono in 0)
     for (int i = 0; rows[i] < i_row; ++i) {
+      // devo finire di sistemare questo for
       for (int j = 0; j < this->get_num_columns(); ++j) {
         result[i_row] += values[j] * vect[i_row];
       }
