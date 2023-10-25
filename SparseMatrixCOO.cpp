@@ -83,7 +83,7 @@ double SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int inpu
 
   return 0.0;
 }
-
+/*
 std::vector<double>& SparseMatrixCOO::operator* (const std::vector<double>& vect) {
   if (columns.size() != vect.size())
     throw std::invalid_argument("Matrix and vector dimensions do not match.");
@@ -91,8 +91,8 @@ std::vector<double>& SparseMatrixCOO::operator* (const std::vector<double>& vect
   // i_row is the i-th row
   for (int i_row = 0; i_row < this->get_num_rows(); ++i_row) {
     // finché effettivamente sono in quella riga (nell'esempio i primi due value sono in 0)
-    for (int i = 0; rows[i] < i_row; ++i) {
-      // devo finire di sistemare questo for
+    for (int i = 0; rows[i] <= i_row; ++i) {
+      // devo finire di sistemare questo for e forse anche sopra
       for (int j = 0; j < this->get_num_columns(); ++j) {
         result[i_row] += values[j] * vect[i_row];
       }
@@ -104,7 +104,7 @@ std::vector<double>& SparseMatrixCOO::operator* (const std::vector<double>& vect
 std::vector<double> SparseMatrixCOO::operator* (const std::vector<double>& vect) const {
 
 }
-
+*/
 void SparseMatrixCOO::print_matrix() {
   std::cout << "values = [";
   for (int i = 0; i < values.size() - 1; ++i)

@@ -19,12 +19,11 @@ double& SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inp
   // and if the index of the column is already present
   // Example: given row_idx{0,2,4} and A(2,2); it checks if row_idx[2] - row_idx[1] > 0
   // which is true because 4 - 2 = 2 > 0
-
   // in realtà dovrei mettere un check che non siano già stati inseriti tutti i nnz disponibili??
   // oltretutto non funziona come vorrei perché se da tastiera chiedo A(2,2) mi dà 3.1 anziché 0 (matrice del prof)
   // e quando sovrascrivo appunto cambia il suo valore, quindi devo aver sbagliato qualcosa
   // Inoltre è da sistemare perché scrivendo A(2,2) scrive da riga 1 colonna 2, siccome in COO abbiamo fatto 2,2, anche qui vorrei 2
-    if((row_idx[input_row_idx] - row_idx[input_row_idx - 1]) > 0 && columns[i] == input_col_idx)
+    if((row_idx[input_row_idx + 1] - row_idx[input_row_idx]) > 0 && columns[i] == input_col_idx)
       return values[i]; // it returns the value
   // otherwise it adds it and returns the new value
   for(int i = input_row_idx; i < row_idx.size(); ++i) // starting from the row in which a new nnz is inserted
@@ -46,7 +45,7 @@ double SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inpu
 
   return 0.0;
 }
-
+/*
 std::vector<double>& SparseMatrixCSR::operator* (const std::vector<double>& vect) {
 
 }
@@ -54,7 +53,7 @@ std::vector<double>& SparseMatrixCSR::operator* (const std::vector<double>& vect
 std::vector<double> SparseMatrixCSR::operator* (const std::vector<double>& vect) const {
 
 }
-
+*/
 void SparseMatrixCSR::print_matrix() {
   std::cout << "values = [";
   for (int i = 0; i < values.size() - 1; ++i)
