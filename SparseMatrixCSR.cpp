@@ -78,28 +78,34 @@ void SparseMatrixCSR::convert() {
   matrix_converted.print_matrix();
 }
 
-void SparseMatrixCSR::print_cute_matrix() {
+void SparseMatrixCSR::print_dense_matrix() {
   std::cout << "The matrix printed in a dense way is:" << std::endl;
-  int j = 0; // index of the vector columns
-  int k = 0; // number of non-zero values
+  int j = 0; // counting index of the vector columns
+  int nnz = 0; // counting number of non-zero values
   for (int i = 0; i < row_idx.size(); ++i) {
-  int idx = 0; // index of column
-  while (k < row_idx[i + 1]) { // while new non-zero values are present
-    if(columns[j] == idx) { // if there is a value in that column
-      std::cout << values[j] << "  "; // print it
-      j++;
-      k++;
-    }
-    else { std::cout << "0  "; } // otherwise print 0
-    idx++;
-  }
-  // if nnz values of a row are finished but the row was not
-  if(k == row_idx[i + 1]) {
-    while(idx < this->get_num_columns()) {
-        std::cout << "0  "; // print 0 until the row ends
-        idx++;
+    int col_num = 0; // number of column
+    while (nnz < row_idx[i + 1]) { // while there are new non-zero values
+      if(columns[j] == col_num) { // if the value of the column matches
+        std::cout << values[j] << "  "; // print the value
+        j++;
+        nnz++;
       }
-  }
-  std::cout << "\n";
+      else { std::cout << "0  "; } // otherwise print 0
+      col_num++;
+    }
+    // even if there aren't new nnz values, the row may not have finished yet
+    while(col_num < this->get_num_columns()) {
+      std::cout << "0  "; // print 0 until the row ends
+      col_num++;
+    }
+    std::cout << "\n"; // break line between rows
   }
 }
+
+/*
+// even if there aren't new nnz values, the row may not have finished yet
+  if(k == row_idx[i + 1]) {
+    while(col_val < this->get_num_columns()) {
+        std::cout << "0  "; // print 0 until the row ends
+        col_val++;
+*/
