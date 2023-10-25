@@ -33,6 +33,14 @@ int main(){
   m2.print_matrix();
   m2.convert(); // convert the matrix from CSR to COO
   m2.print_dense_matrix();
+
+  std::vector<double> vector1 = {1, 2, 0, 3};
+  std::vector<double> result = m2 * vector1;
+  // Print result
+  std::cout << "Product matrix-vector = [";
+  for (int i = 0; i < result.size() - 1; ++i)
+    std::cout << result[i] << ", ";
+  std::cout << result.back() << "]" << std::endl;
   return 0;
 }
 

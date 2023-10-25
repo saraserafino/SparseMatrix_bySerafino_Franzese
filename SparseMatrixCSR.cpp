@@ -47,11 +47,11 @@ double SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inpu
   return 0.0;
 }
 
-double& SparseMatrixCSR::operator* () {
+std::vector<double>& SparseMatrixCSR::operator* (const std::vector<double>& vect) {
 
 }
 
-double SparseMatrixCSR::operator* () const {
+std::vector<double> SparseMatrixCSR::operator* (const std::vector<double>& vect) const {
 
 }
 

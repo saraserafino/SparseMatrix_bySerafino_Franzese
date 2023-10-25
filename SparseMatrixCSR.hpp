@@ -11,8 +11,8 @@ public:
    unsigned int get_num_rows() const override;
    double& operator()(unsigned int input_row_idx, unsigned int input_col_idx) override;
    double operator()(unsigned int input_row_idx, unsigned int input_col_idx) const override;
-   double& operator* () override;
-   double operator* () const override;
+   std::vector<double>& operator* (const std::vector<double>& vect) override;
+   std::vector<double> operator* (const std::vector<double>& vect) const override;
    void print_matrix() override;
    void convert() override;
    void print_dense_matrix() override;
