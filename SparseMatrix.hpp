@@ -11,6 +11,8 @@ public:
     virtual unsigned int get_num_rows() const = 0;
     virtual double& operator()(unsigned int input_row_idx, unsigned int input_col_idx) = 0;
     virtual double operator()(unsigned int input_row_idx, unsigned int input_col_idx) const = 0;
+    virtual double& operator* () = 0;
+    virtual double operator* () const = 0;
     virtual void print_matrix() = 0;
     virtual void convert() = 0;
     virtual void print_dense_matrix() = 0;

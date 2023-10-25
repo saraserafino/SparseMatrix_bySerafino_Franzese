@@ -47,15 +47,25 @@ double SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inpu
   return 0.0;
 }
 
+double& SparseMatrixCSR::operator* () {
+
+}
+
+double SparseMatrixCSR::operator* () const {
+
+}
+
 void SparseMatrixCSR::print_matrix() {
   std::cout << "values = [";
   for (int i = 0; i < values.size() - 1; ++i)
     std::cout << values[i] << ", ";
   std::cout << values.back() << "]" << std::endl;
+
   std::cout << "columns = [";
   for (int i = 0; i < columns.size() - 1; ++i)
     std::cout << columns[i] << ", ";
   std::cout << columns.back() << "]" << std::endl;
+
   std::cout << "row_idx = [";
   for (int i = 0; i < row_idx.size() - 1; ++i)
     std::cout << row_idx[i] << ", ";
@@ -73,6 +83,7 @@ void SparseMatrixCSR::convert() {
       j++;
     }
   }
+
   SparseMatrixCOO matrix_converted(values, rows, columns);
   std::cout << "The matrix converted in COO is:" << std::endl;
   matrix_converted.print_matrix();
@@ -101,11 +112,3 @@ void SparseMatrixCSR::print_dense_matrix() {
     std::cout << "\n"; // break line between rows
   }
 }
-
-/*
-// even if there aren't new nnz values, the row may not have finished yet
-  if(k == row_idx[i + 1]) {
-    while(col_val < this->get_num_columns()) {
-        std::cout << "0  "; // print 0 until the row ends
-        col_val++;
-*/

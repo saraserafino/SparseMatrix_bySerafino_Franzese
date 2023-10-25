@@ -84,17 +84,27 @@ double SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int inpu
   return 0.0;
 }
 
+double& SparseMatrixCOO::operator* () {
+
+}
+
+double SparseMatrixCOO::operator* () const {
+
+}
+
 void SparseMatrixCOO::print_matrix() {
   std::cout << "values = [";
   for (int i = 0; i < values.size() - 1; ++i)
     std::cout << values[i] << ", ";
   //std::cout << values[values.size() - 1] << "]" << std::endl;
   std::cout << values.back() << "]" << std::endl;
+
   std::cout << "rows = [";
   for (int i = 0; i < rows.size() - 1; ++i)
     std::cout << rows[i] << ", ";
   //std::cout << rows[rows.size() - 1] << "]" << std::endl;
   std::cout << rows.back() << "]" << std::endl;
+
   std::cout << "columns = [";
   for (int i = 0; i < columns.size() - 1; ++i)
     std::cout << columns[i] << ", ";
@@ -111,6 +121,7 @@ void SparseMatrixCOO::convert() {
   // Cumulative sum for obtaining row_idx
   for (int i = 2; i < row_converted.size(); ++i)
     row_converted[i] += row_converted[i - 1];
+
   SparseMatrixCSR matrix_converted(values, row_converted, columns);
   std::cout << "The matrix converted in CSR is:" << std::endl;
   matrix_converted.print_matrix();
@@ -141,51 +152,3 @@ void SparseMatrixCOO::print_dense_matrix() {
     std::cout << "\n"; // break line between rows
   }
 }
-/*
-void SparseMatrixCOO::print_dense_matrix() {
-  std::cout << "The matrix printed in a dense way is:" << std::endl;
-  int j = 0; // index of the vector columns
-  //int col_val = 0; // value of column
-  //int row_val = 0; // value of row
-  for(int row_val = 0; row_val < rows.size(); ++row_val) {
-    for(int col_val = 0; col_val < this->get_num_columns(); ++col_val) {
-      if(columns[j] == col_val) { // if the value matches
-        std::cout << values[j] << "  "; // print the value
-        j++;
-      }
-      else { std::cout << "0  "; } // otherwise print 0
-    }
-    std::cout << "\n"; // break line between rows
-  }
-}
-
-void SparseMatrixCOO::print_dense_matrix() {
-  std::cout << "The matrix printed in a dense way is:" << std::endl;
-  int j = 0; // counting index of the vector columns
-  for(int i = 0; i < this->get_num_rows(); ++i) {
-    // Until the right number of column of nnz is found non cambio j
-    for(int col_num = 0; col_num < this->get_num_columns(); ++col_num) {
-      if(columns[j] == col_num) { // if the value matches
-        std::cout << values[j] << "  "; // print the value
-        j++;
-      }
-      else { std::cout << "0  "; } // otherwise print 0
-      }
-    std::cout << "\n"; // break line between rows
-  }
-}
-
-void SparseMatrixCOO::print_dense_matrix() {
-  std::cout << "The matrix printed in a dense way is:";
-  for(int i = 0; i < this->get_num_rows(); ++i) {
-    for(int j = 0; j < this->get_num_columns(); ++j) {
-      for(int k = 0; k < values.size(); ++k) {
-        if(rows[k] == i && columns[k] == j) // if the values match
-          std::cout << values[k] << "  "; // print the value
-        else
-          std::cout << "0  ";
-        }
-    }
-  std::cout << "\n"; // break line between rows
-  }
-}*/
