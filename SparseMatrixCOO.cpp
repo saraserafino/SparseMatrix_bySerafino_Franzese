@@ -117,6 +117,7 @@ void SparseMatrixCOO::convert() {
 }
 
 void SparseMatrixCOO::print_cute_matrix() {
+  std::cout << "The matrix printed in a dense way is:" << std::endl;
   for(int i = 0; i < this->get_num_rows(); ++i) {
     for(int j = 0; j < this->get_num_columns(); ++j) {
       for(int k = 0; k < this->get_num_nnz(); ++k) {

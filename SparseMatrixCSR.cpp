@@ -79,15 +79,31 @@ void SparseMatrixCSR::convert() {
 }
 
 void SparseMatrixCSR::print_cute_matrix() {
-  for(int i = 0; i < this->get_num_rows(); ++i) {
-    for(int j = 0; j < this->get_num_columns(); ++j) {
-      for(int k = 0; k < this->get_num_nnz(); ++k) {
-        if(rows[k] == i && columns[k] == j)
-          std::cout << values[k] << " ";
-        else
-          std::cout << "0 ";
-        }
+  std::cout << "The matrix printed in a dense way is:" << std::endl;
+  int j = 0; // index of the vector columns
+  int k = 0; // number of non-zero values
+  for (int i = 0; i < row_idx.size(); ++i) {
+  int idx = 0; // index of column
+  while (k < row_idx[i + 1]) { // while new non-zero values are present
+    if(columns[j] == idx) { // if there is a value in that column
+      std::cout << values[j] << "  "; // print it
+      j++;
+      k++;
     }
-    std::cout << std::endl;
+    else { std::cout << "0  "; } // otherwise print 0
+    idx++;
+  }
+  // if nnz of a row are finished but the row was not
+  if(k == row_idx.back() + 1 && columns[j] != idx) {
+      for(int g = 0; g < columns.size(); ++g) {
+        std::cout << "0  ";
+        idx++;
+      }
+  }
+  std::cout << "\n"; // at the end of every row, start a new line
+  // if there are no new values in a row, print a line of 0
+  if(row_idx[i + 1] - row_idx[i] == 0)
+    for (int g = 0; g < row_idx.size(); ++g)
+      std::cout << "0  ";
   }
 }
