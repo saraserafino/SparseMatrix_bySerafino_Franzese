@@ -68,9 +68,7 @@ double& SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int inp
   rows.insert(rows.begin() + position, input_row_idx);
   columns.insert(columns.begin() + position, input_col_idx);
   values.insert(values.begin() + position, 0.0); // default value of 0 that will be changed later
-  return values.back(); // returns a reference to the last element in values
-  // aspe però vuol dire che la reference è all'ultimo inteso tail che ora che ho ordinato
-  // non c'entra un cazzo. Che si fa?
+  return values[position];
 }
 
 // Same as above but since now it's const, it doesn't return the reference but the value
@@ -90,15 +88,18 @@ void SparseMatrixCOO::print_matrix() {
   std::cout << "values = [";
   for (int i = 0; i < values.size() - 1; ++i)
     std::cout << values[i] << ", ";
-  std::cout << values[values.size() - 1] << "]" << std::endl;
+  //std::cout << values[values.size() - 1] << "]" << std::endl;
+  std::cout << values.back() << "]" << std::endl;
   std::cout << "rows = [";
   for (int i = 0; i < rows.size() - 1; ++i)
     std::cout << rows[i] << ", ";
-  std::cout << rows[rows.size() - 1] << "]" << std::endl;
+  //std::cout << rows[rows.size() - 1] << "]" << std::endl;
+  std::cout << rows.back() << "]" << std::endl;
   std::cout << "columns = [";
   for (int i = 0; i < columns.size() - 1; ++i)
     std::cout << columns[i] << ", ";
-  std::cout << columns[columns.size() - 1] << "]" << std::endl;
+  //std::cout << columns[columns.size() - 1] << "]" << std::endl;
+  std::cout << columns.back() << "]" << std::endl;
 }
 
 void SparseMatrixCOO::convert() {
@@ -114,13 +115,17 @@ void SparseMatrixCOO::convert() {
   std::cout << "The matrix converted in CSR is:" << std::endl;
   matrix_converted.print_matrix();
 }
-/*
-void SparseMatrixCOO::print_cute_matrix() {
-  for (int i = 0; i < rows.size(); ++i) {
-    for (int j = 0; j < columns.size(); ++j) {
 
+void SparseMatrixCOO::print_cute_matrix() {
+  for(int i = 0; i < this->get_num_rows(); ++i) {
+    for(int j = 0; j < this->get_num_columns(); ++j) {
+      for(int k = 0; k < this->get_num_nnz(); ++k) {
+        if(rows[k] == i && columns[k] == j)
+          std::cout << values[k] << " ";
+        else
+          std::cout << "0 ";
+        }
     }
+    std::cout << std::endl;
   }
-    // se non c'è nessun elemento printa 0
 }
-*/

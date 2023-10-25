@@ -51,15 +51,15 @@ void SparseMatrixCSR::print_matrix() {
   std::cout << "values = [";
   for (int i = 0; i < values.size() - 1; ++i)
     std::cout << values[i] << ", ";
-  std::cout << values[values.size() - 1] << "]" << std::endl;
+  std::cout << values.back() << "]" << std::endl;
   std::cout << "columns = [";
   for (int i = 0; i < columns.size() - 1; ++i)
     std::cout << columns[i] << ", ";
-  std::cout << columns[columns.size() - 1] << "]" << std::endl;
+  std::cout << columns.back() << "]" << std::endl;
   std::cout << "row_idx = [";
   for (int i = 0; i < row_idx.size() - 1; ++i)
     std::cout << row_idx[i] << ", ";
-  std::cout << row_idx[row_idx.size() - 1] << "]" << std::endl;
+  std::cout << row_idx.back() << "]" << std::endl;
 }
 
 void SparseMatrixCSR::convert() {
@@ -77,12 +77,17 @@ void SparseMatrixCSR::convert() {
   std::cout << "The matrix converted in COO is:" << std::endl;
   matrix_converted.print_matrix();
 }
-/*
-void SparseMatrixCSR::print_cute_matrix() {
-  for (int i = 0; i < this->get_num_rows(); ++i) {
-    for (int j = 0; j < columns.size(); ++j) {
 
+void SparseMatrixCSR::print_cute_matrix() {
+  for(int i = 0; i < this->get_num_rows(); ++i) {
+    for(int j = 0; j < this->get_num_columns(); ++j) {
+      for(int k = 0; k < this->get_num_nnz(); ++k) {
+        if(rows[k] == i && columns[k] == j)
+          std::cout << values[k] << " ";
+        else
+          std::cout << "0 ";
+        }
     }
+    std::cout << std::endl;
   }
-    // se non c'è nessun elemento printa 0
-}*/
+}

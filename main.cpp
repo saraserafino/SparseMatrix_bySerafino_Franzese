@@ -15,7 +15,7 @@ int main(){
   std::cout << "After writing m(2,4) = 6.9, it's true that m(2,4) = " << m(2,4) << std::endl;
   m.print_matrix();
   m.convert(); // converts the matrix from COO to CSR
-
+  m.print_cute_matrix();
   // Be aware when defining row_idx for CSR: the first element must be 0 by convention
   std::vector<unsigned int> row_idx = {0, 2, 4, 4, 6}; // CSR
   SparseMatrixCSR m2(values, row_idx, columns);
@@ -27,6 +27,7 @@ int main(){
   std::cout << "After writing m2(3,2) = 20, it's true that m2(3,2) = " << m2(3,2) << std::endl;
   m2.print_matrix();
   m2.convert(); // converts the matrix from CSR to COO
+  m2.print_cute_matrix();
   return 0;
 }
 
