@@ -33,17 +33,22 @@ double& SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inp
     }
   }
 
-    // Il valore non esiste nella riga, inseriscilo
-  columns.push_back(input_col_idx);
-  values.push_back(0.0);
+   // Il valore non esiste nella riga, inseriscilo
+  unsigned int insert_position = row_start; // Posizione in cui inserire il nuovo valore
+  while (insert_position < row_end && columns[insert_position] < input_col_idx) {
+    insert_position++;
+  }
+
+  columns.insert(columns.begin() + insert_position, input_col_idx);
+  values.insert(values.begin() + insert_position, 0.0);
 
   // Aggiorna row_idx per le righe successive
-  for (unsigned int i = input_row_idx; i < row_idx.size(); i++) {
+  for (unsigned int i = input_row_idx + 1; i < row_idx.size(); i++) {
     row_idx[i]++;
   }
 
   // Restituisci il riferimento al nuovo valore
-  return values.back();
+  return values[insert_position];
 }
 
 // Same as above but since now it's const, it doesn't return the reference but the value
@@ -108,7 +113,7 @@ void SparseMatrixCSR::print_dense_matrix() {
   std::cout << "The matrix printed in a dense way is:" << std::endl;
   int j = 0; // counting index of the vector columns
   int nnz = 0; // counting number of non-zero values
-  for (int i = 0; i < row_idx.size(); ++i) {
+  for (int i = 0; i < row_idx.size()-1; ++i) {
     int col_num = 0; // number of column
     while (nnz < row_idx[i + 1]) { // while there are new non-zero values
       if(columns[j] == col_num) { // if the value of the column matches
