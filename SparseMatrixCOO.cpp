@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm> // for using max_element
 
+
 SparseMatrixCOO::SparseMatrixCOO(std::vector<double>& values, std::vector<unsigned int>& rows, std::vector<unsigned int>& columns)
 : SparseMatrix(values,columns), rows(rows) {}
 
@@ -11,37 +12,7 @@ SparseMatrixCOO::SparseMatrixCOO(std::vector<double>& values, std::vector<unsign
 unsigned int SparseMatrixCOO::get_num_rows() const {
   return values.empty() ? 0 : (*std::max_element(rows.begin(), rows.end()) + 1);
 }
-  /* Saverio dopo che hai letto questo commento cancellalo che era solo per spiegarti 
-  Praticamente qua sopra nel get_num_rows partivamo da
-  
-  if (values.empty()) {
-    return 0; // If there are no values, there is no row
-  }
-  unsigned int max = rows[0];
-  for(auto row_idx : rows)
-    if(row_idx > max)
-      max = row_idx;
-  return max + 1;
 
-  Invece che fare da unsigned in poi, basta sostituire con
-  return *std::max_element(rows.begin(), rows.end()) + 1     dove
-  il * serve perché così punta a quel valore (MA non è un puntatore). (row.begin, row.end) è l'intervallo.
-  Ok quindi ora avremmo
-
-  if (values.empty()) {
-    return 0; // If there are no values, there is no row
-  }
-  return *std::max_element(rows.begin(), rows.end()) + 1;
-
-  Che come visto nella lezione di martedì si può ulteriormente ridurre scrivendo quello che
-  effettivamente ho scritto. Praticamente se è vera la cosa prima di ? ti ritorna il primo
-  valore (qui 0), se no ti ritorna il secondo (qui *std...)
-
-  Già che cancellerai questo commento ne approfitto per dirti qui che ho cambiato tutti i row_idx e col_idx
-  in input_row_idx e input_col_idx per rendere un po' più comprensibile visto che anche in CSR si chiama row_idx
-  e poi ricordo che anche il prof aveva scritto input_qualcosa.
-  Insomma questo input_ è quello che scrivi da tastiera quando inserisci
-  */
 
 double& SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int input_col_idx) {
   if(input_row_idx >= this->get_num_rows() || input_col_idx >= this->get_num_columns()) {
@@ -62,9 +33,7 @@ double& SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int inp
       break;
     }
   }
-  // commentino su quanto fatto sotto, poi cancella il commento.
-  // la prima roba fra parentesi è il posto in cui aggiungi (inizio+position),
-  // la seconda è il valore che aggiungi
+
   rows.insert(rows.begin() + position, input_row_idx);
   columns.insert(columns.begin() + position, input_col_idx);
   values.insert(values.begin() + position, 0.0); // default value of 0 that will be changed later
@@ -141,7 +110,7 @@ void SparseMatrixCOO::print_dense_matrix() {
   std::cout << "The matrix printed in a dense way is:" << std::endl;
   int j = 0; // counting index of the vector columns
   int i = 0; // counting index of the vector rows
-  int nnz = 0; // counting number of non-zero values
+  //int nnz = 0; // counting number of non-zero values
   for(int k = 0; k < this->get_num_rows(); ++k) {
     int col_num = 0; // number of column
     while(k == rows[i]) { // while still in the same row
@@ -149,7 +118,7 @@ void SparseMatrixCOO::print_dense_matrix() {
         std::cout << values[j] << "  "; // print the value
         j++;
         i++;
-        nnz++;
+    //    nnz++;
       }
       else { std::cout << "0  "; } // otherwise print 0
       col_num++;

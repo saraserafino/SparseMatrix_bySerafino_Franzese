@@ -27,13 +27,13 @@ int main(){
 
   //std::cout << "m2(3,2) = " << m2(3,2) << std::endl;
   //m2(2,4) = 6.9; //OCCHIO che quando ho messo questo per prova mi ha printato 0 a manetta, per interrompere fai control(^)+c
-  //m2(3,2) = 20;
+  m2(3,2) = 20;
   //m2(1,1) = 16;
-  //std::cout << "After writing m2(3,2) = 20, it's true that m2(3,2) = " << m2(3,2) << std::endl;
+std::cout << "After writing m2(3,2) = 20, it's true that m2(3,2) = " << m2(3,2) << std::endl;
   
-  m2.print_matrix();
-  m2.convert(); // convert the matrix from CSR to COO
-  m2.print_dense_matrix();
+ m2.print_matrix();
+ m2.convert(); // convert the matrix from CSR to COO
+// m2.print_dense_matrix();
 /*
   std::vector<double> vector1 = {1, 2, 0, 3};
   std::vector<double> result = m2 * vector1;
