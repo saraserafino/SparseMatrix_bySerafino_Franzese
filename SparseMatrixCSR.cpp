@@ -5,6 +5,8 @@
 SparseMatrixCSR::SparseMatrixCSR(std::vector<double>& values, std::vector<unsigned int>& row_idx, std::vector<unsigned int>& columns)
 : SparseMatrix(values,columns), row_idx(row_idx) {}
 
+// Returns the number of rows of the matrix. For the way it's saved,
+// the number of rows is the size of the vector row_idx - 1
 unsigned int SparseMatrixCSR::get_num_rows() const {
   return values.empty() ? 0 : (row_idx.size() - 1);
 }
@@ -14,41 +16,29 @@ double& SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inp
     throw std::out_of_range ("Indexes out of range");
   }
 
-  // The following if checks if there is at least a non-zero value in that row
-  // and if the index of the column is already present
-  // Example: given row_idx{0,2,4} and A(2,2); it checks if row_idx[2] - row_idx[1] > 0
-  // which is true because 4 - 2 = 2 > 0
-  // in realtà dovrei mettere un check che non siano già stati inseriti tutti i nnz disponibili??
-  // oltretutto non funziona come vorrei perché se da tastiera chiedo A(2,2) mi dà 3.1 anziché 0 (matrice del prof)
-  // e quando sovrascrivo appunto cambia il suo valore, quindi devo aver sbagliato qualcosa
-  // Inoltre è da sistemare perché scrivendo A(2,2) scrive da riga 1 colonna 2, siccome in COO abbiamo fatto 2,2, anche qui vorrei 2
-    // Trova la posizione in cui cercare il valore nella riga corrente
   unsigned int row_start = row_idx[input_row_idx];
   unsigned int row_end = row_idx[input_row_idx + 1];
 
-  // Cerca se il valore esiste già nella riga
-  for (unsigned int i = row_start; i < row_end; i++) {
-    if (columns[i] == input_col_idx) {
-      return values[i]; // Il valore esiste, restituisci il riferimento
-    }
+  // Check if those row and column have already a value
+  for (unsigned int i = row_start; i < row_end; i++)
+    if (columns[i] == input_col_idx)
+      return values[i]; // it returns it
+  // otherwise it adds it and returns the new value.
+  // Compute the right position in which to insert it
+  unsigned int position = row_start;
+  while (position < row_end && columns[position] < input_col_idx) {
+    position++;
   }
 
-   // Il valore non esiste nella riga, inseriscilo
-  unsigned int insert_position = row_start; // Posizione in cui inserire il nuovo valore
-  while (insert_position < row_end && columns[insert_position] < input_col_idx) {
-    insert_position++;
-  }
+  columns.insert(columns.begin() + position, input_col_idx);
+  values.insert(values.begin() + position, 0.0);
 
-  columns.insert(columns.begin() + insert_position, input_col_idx);
-  values.insert(values.begin() + insert_position, 0.0);
-
-  // Aggiorna row_idx per le righe successive
+  // Update row_idx for next rows
   for (unsigned int i = input_row_idx + 1; i < row_idx.size(); i++) {
     row_idx[i]++;
   }
 
-  // Restituisci il riferimento al nuovo valore
-  return values[insert_position];
+  return values[position];
 }
 
 // Same as above but since now it's const, it doesn't return the reference but the value
@@ -58,12 +48,11 @@ double SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inpu
   }
   unsigned int row_start = row_idx[input_row_idx];
   unsigned int row_end = row_idx[input_row_idx + 1];
-  // Cerca se il valore esiste già nella riga
-  for (unsigned int i = row_start; i < row_end; i++) {
-    if (columns[i] == input_col_idx) {
-      return values[i]; // Il valore esiste, restituisci il riferimento
-    }
-  }
+
+  for (unsigned int i = row_start; i < row_end; i++)
+    if (columns[i] == input_col_idx)
+      return values[i];
+  
   return 0.0;
 }
 /*
@@ -113,7 +102,8 @@ void SparseMatrixCSR::print_dense_matrix() {
   std::cout << "The matrix printed in a dense way is:" << std::endl;
   int j = 0; // counting index of the vector columns
   int nnz = 0; // counting number of non-zero values
-  for (int i = 0; i < row_idx.size()-1; ++i) {
+  int num_columns = this->get_num_columns();
+  for (int i = 0; i < row_idx.size() - 1; ++i) {
     int col_num = 0; // number of column
     while (nnz < row_idx[i + 1]) { // while there are new non-zero values
       if(columns[j] == col_num) { // if the value of the column matches
@@ -125,7 +115,7 @@ void SparseMatrixCSR::print_dense_matrix() {
       col_num++;
     }
     // even if there aren't new nnz values, the row may not have finished yet
-    while(col_num < this->get_num_columns()) {
+    while(col_num < num_columns) {
       std::cout << "0  "; // print 0 until the row ends
       col_num++;
     }

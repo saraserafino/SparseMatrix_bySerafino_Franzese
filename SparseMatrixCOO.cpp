@@ -7,7 +7,7 @@
 SparseMatrixCOO::SparseMatrixCOO(std::vector<double>& values, std::vector<unsigned int>& rows, std::vector<unsigned int>& columns)
 : SparseMatrix(values,columns), rows(rows) {}
 
-// returns the number of rows of the matrix. For the way it's saved,
+// Returns the number of rows of the matrix. For the way it's saved,
 // the number of rows is the maximum index of row of the non-zero values
 unsigned int SparseMatrixCOO::get_num_rows() const {
   return values.empty() ? 0 : (*std::max_element(rows.begin(), rows.end()) + 1);
@@ -20,15 +20,16 @@ double& SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int inp
   }
 
   for(int i = 0; i < values.size(); ++i)
-    // if the indexes are present in the vectors rows and columns
+    // Check if those row and column have already a value
     if(rows[i] == input_row_idx && columns[i] == input_col_idx)
-      return values[i]; // it returns the value
+      return values[i];
+
   // otherwise it adds it and returns the new value, keeping an
   // increasing order in rows (and consequently values and columns).
   // Compute the right position in which to insert
   int position = 0;
   for (int i = 0; i < rows.size(); ++i) {
-    if(rows[i] == input_row_idx + 1) {
+    if(rows[i] >= input_row_idx) {
       position = i;
       break;
     }
@@ -110,7 +111,7 @@ void SparseMatrixCOO::print_dense_matrix() {
   std::cout << "The matrix printed in a dense way is:" << std::endl;
   int j = 0; // counting index of the vector columns
   int i = 0; // counting index of the vector rows
-  //int nnz = 0; // counting number of non-zero values
+  int num_columns = this->get_num_columns();
   for(int k = 0; k < this->get_num_rows(); ++k) {
     int col_num = 0; // number of column
     while(k == rows[i]) { // while still in the same row
@@ -118,13 +119,12 @@ void SparseMatrixCOO::print_dense_matrix() {
         std::cout << values[j] << "  "; // print the value
         j++;
         i++;
-    //    nnz++;
       }
       else { std::cout << "0  "; } // otherwise print 0
       col_num++;
     }
     // even if there aren't other nnz values in a row, the row may not have finished yet
-    while(col_num < this->get_num_columns()) {
+    while(col_num < num_columns) {
       std::cout << "0  "; // print 0 until the row ends
       col_num++;
     }

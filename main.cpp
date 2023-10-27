@@ -10,11 +10,15 @@ int main(){
   SparseMatrixCOO m(values, rows, columns);
   std::cout << "The matrix m has " << m.get_num_rows() << " rows, " << m.get_num_columns()
   << " columns and " << m.get_num_nnz() << " non-zero values." << std::endl;
-
-  std::cout << "m(2,4) = " << m(2,4) << std::endl;
-  m(2,4) = 6.9; // non-const version
-  std::cout << "After writing m(2,4) = 6.9, it's true that m(2,4) = " << m(2,4) << std::endl;
   
+  std::cout << "m(1,0) = " << m(1,0) << std::endl;
+  std::cout << "m(2,3) = " << m(2,3) << std::endl;
+  m(1,0) = 6.9; // non-const version
+  m(2,3) = 5.7;
+  std::cout << "Changing their value to" << std::endl;
+  std::cout << "m(1,0) = " << m(1,0) << std::endl;
+  std::cout << "m(2,3) = " << m(2,3) << std::endl;
+
   m.print_matrix();
   m.convert(); // convert the matrix from COO to CSR
   m.print_dense_matrix();
@@ -25,15 +29,17 @@ int main(){
   std::cout << "The matrix m2 has " << m2.get_num_rows() << " rows, " << m2.get_num_columns()
   << " columns and " << m2.get_num_nnz() << " non-zero values." << std::endl;
 
-  std::cout << "m2(3,2) = " << m2(3,2) << std::endl;
-  m2(2,4) = 6.9; //OCCHIO che quando ho messo questo per prova mi ha printato 0 a manetta, per interrompere fai control(^)+c
-  m2(3,2) = 20;
-  m2(1,1) = 16;
-std::cout << "After writing m2(3,2) = 20, it's true that m2(3,2) = " << m2(3,2) << std::endl;
-  
-m2.print_matrix();
-m2.convert(); // convert the matrix from CSR to COO
-m2.print_dense_matrix();
+  std::cout << "m2(1,0) = " << m2(1,0) << std::endl;
+  std::cout << "m2(2,3) = " << m2(2,3) << std::endl;
+  m2(1,0) = 6.9; // non-const version
+  m2(2,3) = 5.7;
+  std::cout << "Changing their value to" << std::endl;
+  std::cout << "m2(1,0) = " << m2(1,0) << std::endl;
+  std::cout << "m2(2,3) = " << m2(2,3) << std::endl;
+
+  m2.print_matrix();
+  m2.convert(); // convert the matrix from CSR to COO
+  m2.print_dense_matrix();
 /*
   std::vector<double> vector1 = {1, 2, 0, 3};
   std::vector<double> result = m2 * vector1;
