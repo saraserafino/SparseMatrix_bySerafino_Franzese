@@ -22,9 +22,9 @@ double& SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inp
   // oltretutto non funziona come vorrei perché se da tastiera chiedo A(2,2) mi dà 3.1 anziché 0 (matrice del prof)
   // e quando sovrascrivo appunto cambia il suo valore, quindi devo aver sbagliato qualcosa
   // Inoltre è da sistemare perché scrivendo A(2,2) scrive da riga 1 colonna 2, siccome in COO abbiamo fatto 2,2, anche qui vorrei 2
-   // Trova la posizione in cui cercare il valore nella riga corrente
-  unsigned int row_start = row_idx[input_row_idx - 1];
-  unsigned int row_end = row_idx[input_row_idx];
+    // Trova la posizione in cui cercare il valore nella riga corrente
+  unsigned int row_start = row_idx[input_row_idx];
+  unsigned int row_end = row_idx[input_row_idx + 1];
 
   // Cerca se il valore esiste già nella riga
   for (unsigned int i = row_start; i < row_end; i++) {
@@ -33,17 +33,17 @@ double& SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inp
     }
   }
 
-  // Il valore non esiste nella riga, inseriscilo
-  columns.insert(columns.begin() + row_end, input_col_idx);
-  values.insert(values.begin() + row_end, 0.0);
+    // Il valore non esiste nella riga, inseriscilo
+  columns.push_back(input_col_idx);
+  values.push_back(0.0);
 
   // Aggiorna row_idx per le righe successive
-  for (unsigned int i = input_row_idx; i <= get_num_rows(); i++) {
+  for (unsigned int i = input_row_idx; i < row_idx.size(); i++) {
     row_idx[i]++;
   }
 
   // Restituisci il riferimento al nuovo valore
-  return values[row_end];
+  return values.back();
 }
 
 // Same as above but since now it's const, it doesn't return the reference but the value
@@ -51,16 +51,14 @@ double SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inpu
   if(input_row_idx >= this->get_num_rows() || input_col_idx >= this->get_num_columns()) {
     throw std::out_of_range ("Indexes out of range");
   }
-  unsigned int row_start = row_idx[input_row_idx - 1];
-  unsigned int row_end = row_idx[input_row_idx];
-
+  unsigned int row_start = row_idx[input_row_idx];
+  unsigned int row_end = row_idx[input_row_idx + 1];
   // Cerca se il valore esiste già nella riga
   for (unsigned int i = row_start; i < row_end; i++) {
     if (columns[i] == input_col_idx) {
       return values[i]; // Il valore esiste, restituisci il riferimento
     }
   }
-  
   return 0.0;
 }
 /*
