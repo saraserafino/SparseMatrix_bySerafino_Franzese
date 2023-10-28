@@ -55,15 +55,25 @@ double SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inpu
   
   return 0.0;
 }
-/*
-std::vector<double>& SparseMatrixCSR::operator* (const std::vector<double>& vect) {
 
-}
 
 std::vector<double> SparseMatrixCSR::operator* (const std::vector<double>& vect) const {
+  if (this->get_num_columns() != vect.size()){
+        throw std::invalid_argument("Matrix and vector dimensions do not match.");
+  }
+  int num_rows=this->get_num_rows();
+  std::vector<double> result(num_rows, 0.0);
 
+  for (int i = 0; i < num_rows; ++i) {
+    double sum = 0.0;
+    for (int j=row_idx[i]; j<row_idx[i+1]; ++j){
+      sum += values[j] * vect[columns[j]];
+    }
+    result[i] = sum;
+  }
+  return result;
 }
-*/
+
 void SparseMatrixCSR::print_matrix() {
   std::cout << "values = [";
   for (int i = 0; i < values.size() - 1; ++i)

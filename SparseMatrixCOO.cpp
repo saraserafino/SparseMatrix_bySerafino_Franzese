@@ -53,28 +53,28 @@ double SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int inpu
 
   return 0.0;
 }
-/*
-std::vector<double>& SparseMatrixCOO::operator* (const std::vector<double>& vect) {
-  if (columns.size() != vect.size())
-    throw std::invalid_argument("Matrix and vector dimensions do not match.");
-  std::vector<double> result(this->get_num_rows(), 0.0);
-  // i_row is the i-th row
-  for (int i_row = 0; i_row < this->get_num_rows(); ++i_row) {
-    // finché effettivamente sono in quella riga (nell'esempio i primi due value sono in 0)
-    for (int i = 0; rows[i] <= i_row; ++i) {
-      // devo finire di sistemare questo for e forse anche sopra
-      for (int j = 0; j < this->get_num_columns(); ++j) {
-        result[i_row] += values[j] * vect[i_row];
-      }
+
+std::vector<double> SparseMatrixCOO::operator*(const std::vector<double>& vect) const {
+  if (this->get_num_columns() != vect.size()){
+        throw std::invalid_argument("Matrix and vector dimensions do not match.");
+  }
+  int num_rows=this->get_num_rows();
+  std::vector<double> result(num_rows, 0.0);
+  int j=0;
+  
+
+  for (int i = 0; i < num_rows; ++i) {
+    double sum = 0.0;
+    while (j < values.size() && rows[j] == i) {
+      sum += values[j] * vect[columns[j]];
+      j++;
     }
+    result[i] = sum;
   }
   return result;
 }
 
-std::vector<double> SparseMatrixCOO::operator* (const std::vector<double>& vect) const {
 
-}
-*/
 void SparseMatrixCOO::print_matrix() {
   std::cout << "values = [";
   for (int i = 0; i < values.size() - 1; ++i)
@@ -93,8 +93,7 @@ void SparseMatrixCOO::print_matrix() {
 }
 
 void SparseMatrixCOO::convert() {
-  std::vector<unsigned int> row_converted;
-  row_converted.resize(this->get_num_rows() + 1, 0);
+  std::vector<unsigned int> row_converted(this->get_num_rows() + 1, 0);
   // Count the number of nnz elements in each row
   for (int i = 0; i < values.size(); ++i)
     row_converted[rows[i] + 1]++;
