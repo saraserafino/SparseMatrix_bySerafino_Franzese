@@ -2,7 +2,6 @@
 #define SPARSE_MATRIX_CSR_HPP_
 
 #include "SparseMatrix.hpp"
-#include <vector>
 
 class SparseMatrixCSR : public SparseMatrix {
 public:
@@ -12,9 +11,9 @@ public:
    double& operator()(unsigned int input_row_idx, unsigned int input_col_idx) override;
    double operator()(unsigned int input_row_idx, unsigned int input_col_idx) const override;
    std::vector<double> operator* (const std::vector<double>& vect) const override;
-   void print_matrix() override;
+   void print_matrix() const override;
    SparseMatrix* convert() override;
-   void print_dense_matrix() override;
+   void print_dense_matrix() const override;
 
 private:
 // the vector row_idx_CSR of int contains the cumulative number of nonzero entries up to the i-th row excluded

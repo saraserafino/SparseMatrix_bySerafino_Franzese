@@ -11,20 +11,7 @@ unsigned int SparseMatrix::get_num_nnz() const {
     }
 
 // returns the number of columns of the matrix. For the way it's saved, the number of columns
-// is the maximum index of column of the non-zero values
+// is the maximum index of column of the non-zero values + 1
 unsigned int SparseMatrix::get_num_columns() const {
     return values.empty() ? 0 : (*std::max_element(columns.begin(), columns.end()) + 1);
 }
-
-/* Copy costructor
-SparseMatrix::SparseMatrix(const SparseMatrix &other) {
-    matrix = new double[other.lunghezza];
-    size_columns = other.size_columns;
-    size_rows = other.size_rows;
-    lunghezza = other.lunghezza;
-    // il seguente penso dia problemi per il fatto che ci sono gli 0 non dichiarati, casomai da dire che se non c'è è 0
-    for (unsigned int i = 0; i < lunghezza; i++){
-        matrix[i]= other.matrix[i];
-    }
-    }
-*/

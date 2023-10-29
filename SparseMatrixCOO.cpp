@@ -75,7 +75,7 @@ std::vector<double> SparseMatrixCOO::operator*(const std::vector<double>& vect) 
 }
 
 
-void SparseMatrixCOO::print_matrix() {
+void SparseMatrixCOO::print_matrix() const {
   std::cout << "The matrix written in COO is: " << std::endl;
   std::cout << "values = [";
   for (int i = 0; i < values.size() - 1; ++i)
@@ -105,7 +105,7 @@ SparseMatrix* SparseMatrixCOO::convert() {
   return new SparseMatrixCSR (values, row_converted, columns);
 }
 
-void SparseMatrixCOO::print_dense_matrix() {
+void SparseMatrixCOO::print_dense_matrix() const {
   std::cout << "The matrix printed in a dense way is:" << std::endl;
   int j = 0; // counting index of the vector columns
   int i = 0; // counting index of the vector rows
