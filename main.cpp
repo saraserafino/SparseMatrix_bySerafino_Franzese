@@ -16,8 +16,8 @@ int main(){
   std::cout << "Changing its value to M(2,3) = " << M(2,3) << std::endl;
 
   M.print_matrix();
-  // M.convert() returns a pointer to SparseMatrix, with cast (SparseMatrixCSR*) we convert
-  // it to a pointer to SparseMatrixCSR
+  // M.convert() returns a pointer to SparseMatrix, with cast (SparseMatrixCSR*)
+  // we convert it to a pointer to SparseMatrixCSR
   SparseMatrixCSR* Mconverted = (SparseMatrixCSR*) M.convert();
   std::cout << "Converting the matrix..." << std::endl;
   Mconverted->print_matrix();
