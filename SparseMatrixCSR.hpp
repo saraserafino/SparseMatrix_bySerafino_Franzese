@@ -6,6 +6,7 @@
 class SparseMatrixCSR : public SparseMatrix {
 public:
    SparseMatrixCSR(std::vector<double>& values, std::vector<unsigned int>& row_idx, std::vector<unsigned int>& columns);
+   
    // Overriding the following pure virtual methods
    unsigned int get_num_rows() const override;
    double& operator()(unsigned int input_row_idx, unsigned int input_col_idx) override;

@@ -8,7 +8,7 @@ SparseMatrixCOO::SparseMatrixCOO(std::vector<double>& values, std::vector<unsign
 : SparseMatrix(values,columns), rows(rows) {}
 
 // Returns the number of rows of the matrix. For the way it's saved,
-// the number of rows is the maximum index of row of the non-zero values
+// the number of rows is the maximum index of row of the the non-zero values + 1
 unsigned int SparseMatrixCOO::get_num_rows() const {
   return values.empty() ? 0 : (*std::max_element(rows.begin(), rows.end()) + 1);
 }
@@ -58,13 +58,13 @@ std::vector<double> SparseMatrixCOO::operator*(const std::vector<double>& vect) 
   if (this->get_num_columns() != vect.size()){
         throw std::invalid_argument("Matrix and vector dimensions do not match.");
   }
+
   int num_rows=this->get_num_rows();
   std::vector<double> result(num_rows, 0.0);
-  int j=0;
-  
-
+  int j = 0; // index of the current vector values considered
   for (int i = 0; i < num_rows; ++i) {
     double sum = 0.0;
+    // checks if we're still in the same row
     while (j < values.size() && rows[j] == i) {
       sum += values[j] * vect[columns[j]];
       j++;
@@ -107,8 +107,8 @@ SparseMatrix* SparseMatrixCOO::convert() {
 
 void SparseMatrixCOO::print_dense_matrix() const {
   std::cout << "The matrix printed in a dense way is:" << std::endl;
-  int j = 0; // counting index of the vector columns
-  int i = 0; // counting index of the vector rows
+  int j = 0; // index of the current vector columns considered
+  int i = 0; // index of the current vector rows considered
   int num_columns = this->get_num_columns();
   for(int k = 0; k < this->get_num_rows(); ++k) {
     int col_num = 0; // number of column
@@ -121,7 +121,7 @@ void SparseMatrixCOO::print_dense_matrix() const {
       else { std::cout << "0  "; } // otherwise print 0
       col_num++;
     }
-    // even if there aren't other nnz values in a row, the row may not have finished yet
+    // even if there aren't other nnz values in a row, the row may not be finished yet
     while(col_num < num_columns) {
       std::cout << "0  "; // print 0 until the row ends
       col_num++;

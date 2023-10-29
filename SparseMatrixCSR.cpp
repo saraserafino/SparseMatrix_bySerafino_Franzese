@@ -61,12 +61,13 @@ std::vector<double> SparseMatrixCSR::operator* (const std::vector<double>& vect)
   if (this->get_num_columns() != vect.size()){
         throw std::invalid_argument("Matrix and vector dimensions do not match.");
   }
+
   int num_rows=this->get_num_rows();
   std::vector<double> result(num_rows, 0.0);
 
   for (int i = 0; i < num_rows; ++i) {
     double sum = 0.0;
-    for (int j=row_idx[i]; j<row_idx[i+1]; ++j){
+    for (int j=row_idx[i]; j < row_idx[i+1]; ++j) {
       sum += values[j] * vect[columns[j]];
     }
     result[i] = sum;
@@ -97,8 +98,8 @@ SparseMatrix* SparseMatrixCSR::convert() {
   rows.resize(values.size(), 0);
   int j = 0;
   for (int i = 0; i < values.size(); ++i) {
-    while (j < row_idx[i + 1]) { // while new non-zero values are present
-      // Allocate the row indexes
+    while (j < row_idx[i + 1]) { // while new nnz values are present
+      // Allocate the row indeces
       rows[j] = i;
       j++;
     }
@@ -109,8 +110,8 @@ SparseMatrix* SparseMatrixCSR::convert() {
 
 void SparseMatrixCSR::print_dense_matrix() const {
   std::cout << "The matrix printed in a dense way is:" << std::endl;
-  int j = 0; // counting index of the vector columns
-  int nnz = 0; // counting number of non-zero values
+  int j = 0; // index of the current vector columns considered
+  int nnz = 0; // index of the current vector of nnz values
   int num_columns = this->get_num_columns();
   for (int i = 0; i < row_idx.size() - 1; ++i) {
     int col_num = 0; // number of column
@@ -123,7 +124,7 @@ void SparseMatrixCSR::print_dense_matrix() const {
       else { std::cout << "0  "; } // otherwise print 0
       col_num++;
     }
-    // even if there aren't new nnz values, the row may not have finished yet
+    // even if there aren't new nnz values, the row may not be finished yet
     while(col_num < num_columns) {
       std::cout << "0  "; // print 0 until the row ends
       col_num++;
