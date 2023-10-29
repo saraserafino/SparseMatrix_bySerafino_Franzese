@@ -17,10 +17,10 @@ int main(){
   std::cout << "Changing its value to M(2,3) = " << M(2,3) << std::endl;
 
   M.print_matrix();
-  // M.convert() returns a pointer to SparseMatrix, with cast (SparseMatrixCSR*)
+  std::cout << "Converting the matrix..." << std::endl;
+  // M.convert() returns a pointer to SparseMatrix, with casting (SparseMatrixCSR*)
   // we convert it to a pointer to SparseMatrixCSR
   SparseMatrixCSR* Mconverted = (SparseMatrixCSR*) M.convert();
-  std::cout << "Converting the matrix..." << std::endl;
   Mconverted->print_matrix();
   M.print_dense_matrix();
 
@@ -76,8 +76,8 @@ int main(){
   std::cout << "Changing its value to M2(2,3) = " << M2(2,3) << std::endl;
 
   M2.print_matrix();
-  SparseMatrixCOO* M2converted = (SparseMatrixCOO*) M2.convert();
   std::cout << "Converting the matrix..." << std::endl;
+  SparseMatrixCOO* M2converted = (SparseMatrixCOO*) M2.convert();
   M2converted->print_matrix();
   M2.print_dense_matrix();
   
