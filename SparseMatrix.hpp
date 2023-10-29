@@ -13,8 +13,9 @@ public:
     virtual double operator()(unsigned int input_row_idx, unsigned int input_col_idx) const = 0;
     virtual std::vector<double> operator* (const std::vector<double>& vect) const = 0;
     virtual void print_matrix() = 0;
-    virtual void convert() = 0;
     virtual void print_dense_matrix() = 0;
+    // We define the following in this way because we want to return a matrix in the other format
+    virtual SparseMatrix* convert() = 0;
     // else they're not and we define them only in SparseMatrix
     unsigned int get_num_columns() const;
     unsigned int get_num_nnz() const;

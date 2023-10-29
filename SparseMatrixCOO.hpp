@@ -13,7 +13,7 @@ public:
     double operator()(unsigned int input_row_idx, unsigned int input_col_idx) const override;
     std::vector<double> operator* (const std::vector<double>& vect) const override;
     void print_matrix() override;
-    void convert() override;
+    SparseMatrix* convert() override;
     void print_dense_matrix() override;
 
 private:
