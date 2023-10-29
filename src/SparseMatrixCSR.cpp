@@ -62,12 +62,12 @@ std::vector<double> SparseMatrixCSR::operator* (const std::vector<double>& vect)
         throw std::invalid_argument("Matrix and vector dimensions do not match.");
   }
 
-  int num_rows=this->get_num_rows();
+  int num_rows = this->get_num_rows();
   std::vector<double> result(num_rows, 0.0);
 
   for (int i = 0; i < num_rows; ++i) {
     double sum = 0.0;
-    for (int j=row_idx[i]; j < row_idx[i+1]; ++j) {
+    for (int j = row_idx[i]; j < row_idx[i+1]; ++j) {
       sum += values[j] * vect[columns[j]];
     }
     result[i] = sum;

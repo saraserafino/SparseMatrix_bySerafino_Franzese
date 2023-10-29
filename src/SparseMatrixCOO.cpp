@@ -59,7 +59,7 @@ std::vector<double> SparseMatrixCOO::operator*(const std::vector<double>& vect) 
         throw std::invalid_argument("Matrix and vector dimensions do not match.");
   }
 
-  int num_rows=this->get_num_rows();
+  int num_rows = this->get_num_rows();
   std::vector<double> result(num_rows, 0.0);
   int j = 0; // index of the current vector values considered
   for (int i = 0; i < num_rows; ++i) {
