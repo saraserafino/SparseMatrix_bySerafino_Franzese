@@ -1,5 +1,6 @@
 #include "SparseMatrix.hpp"
 #include <iostream>
+#include <algorithm> // for using max_element
 
 // Constructor
 SparseMatrix::SparseMatrix(std::vector<double>& values, std::vector<unsigned int>& columns)

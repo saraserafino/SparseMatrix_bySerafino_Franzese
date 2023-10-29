@@ -8,7 +8,8 @@ int main(){
   std::vector<unsigned int> columns = {2, 4, 2, 4, 1, 3}; // COO
   SparseMatrixCOO M(values, rows, columns);
 
-  std::cout << "The matrix M has " << M.get_num_rows() << " rows, " << M.get_num_columns()
+  std::cout << "The matrix M is written in COO format." << std::endl;
+  std::cout << "M has " << M.get_num_rows() << " rows, " << M.get_num_columns()
   << " columns and " << M.get_num_nnz() << " non-zero values." << std::endl;
   
   std::cout << "Right now M(2,3) = " << M(2,3) << std::endl;
@@ -59,14 +60,15 @@ int main(){
   for (int i = 0; i < M.get_num_rows() - 1; ++i) {
       std::cout << q3[i] << ", ";
   }
-  std::cout << q3.back() << "]" << std::endl;
+  std::cout << q3.back() << "]" << std::endl << std::endl;
 
 
   // Be aware when defining row_idx for CSR: the first element must be 0 by convention
   std::vector<unsigned int> row_idx = {0, 2, 4, 4, 6}; // CSR
   SparseMatrixCSR M2(values, row_idx, columns);
 
-  std::cout << "The matrix M2 has " << M2.get_num_rows() << " rows, " << M2.get_num_columns()
+  std::cout << "The matrix M2 is written in CSR format." << std::endl;
+  std::cout << "M2 has " << M2.get_num_rows() << " rows, " << M2.get_num_columns()
   << " columns and " << M2.get_num_nnz() << " non-zero values." << std::endl;
 
   std::cout << "Right now M2(2,3) = " << M2(2,3) << std::endl;
@@ -89,8 +91,9 @@ int main(){
   std::cout << q4.back() << "]" << std::endl;
 
   auto q5 = M2 * vector_canonical;
-  std::cout << "Multiplying the matrix for the 3-th vector of the "
-            << "canonical basis we obtain the 3th column of the matrix:"
+  std::cout << "The multiplication of a matrix for the i-th vector of the "
+            << "canonical basis gives the i-th column of the matrix." << std::endl
+            << "In this case with 3th vector of the canonical basis:"
             << std::endl << "[";
   for (int i = 0; i < M2.get_num_rows() - 1; ++i) {
       std::cout << q5[i] << ", ";
@@ -99,7 +102,7 @@ int main(){
 
   auto q6 = M2 * vector;
 
-  std::cout << "Multiplication of the vector [ ";
+  std::cout << "Multiplication of the vector [";
   for (int i = 0; i < vector.size() - 1; ++i)
     std::cout << vector[i] << ", ";
   std::cout << vector.back() << "] for the matrix M2:" << std::endl;
