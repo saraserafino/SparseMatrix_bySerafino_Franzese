@@ -1,6 +1,7 @@
 #include "SparseMatrixCSR.hpp"
-#include "SparseMatrixCOO.hpp" // we need it for the convert method
+#include "SparseMatrixCOO.hpp" // for the convert method
 #include <iostream>
+#include <stdexcept> // for out_of_range and invalid_argument
 
 // Constructor
 SparseMatrixCSR::SparseMatrixCSR(std::vector<double>& values, std::vector<unsigned int>& row_idx, std::vector<unsigned int>& columns)
@@ -16,7 +17,7 @@ double& SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inp
   if(input_row_idx >= this->get_num_rows() || input_col_idx >= this->get_num_columns()) {
     throw std::out_of_range ("Indexes out of range");
   }
-  
+
   unsigned int row_start = row_idx[input_row_idx];
   unsigned int row_end = row_idx[input_row_idx + 1];
 

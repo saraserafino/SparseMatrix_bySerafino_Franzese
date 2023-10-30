@@ -1,7 +1,8 @@
 #include "SparseMatrixCOO.hpp"
-#include "SparseMatrixCSR.hpp" // we need it for the convert method
+#include "SparseMatrixCSR.hpp" // for the convert method
 #include <iostream>
-#include <algorithm> // for using max_element
+#include <algorithm> // for max_element
+#include <stdexcept> // for out_of_range and invalid_argument
 
 // Constructor
 SparseMatrixCOO::SparseMatrixCOO(std::vector<double>& values, std::vector<unsigned int>& rows, std::vector<unsigned int>& columns)
