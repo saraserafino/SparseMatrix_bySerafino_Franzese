@@ -26,4 +26,5 @@ std::vector<double> values;
 // the vector columns contains their corresponding columns indices
 std::vector<unsigned int> columns;
 };
+
 #endif

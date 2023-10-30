@@ -3,7 +3,7 @@
 #include <iostream>
 #include <algorithm> // for using max_element
 
-
+// Constructor
 SparseMatrixCOO::SparseMatrixCOO(std::vector<double>& values, std::vector<unsigned int>& rows, std::vector<unsigned int>& columns)
 : SparseMatrix(values,columns), rows(rows) {}
 
@@ -13,20 +13,20 @@ unsigned int SparseMatrixCOO::get_num_rows() const {
   return values.empty() ? 0 : (*std::max_element(rows.begin(), rows.end()) + 1);
 }
 
-
 double& SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int input_col_idx) {
   if(input_row_idx >= this->get_num_rows() || input_col_idx >= this->get_num_columns()) {
     throw std::out_of_range ("Indexes out of range");
-  }
+  } // Source: https://stackoverflow.com/questions/2709719/throwing-out-of-range-exception-in-c 
 
   for(int i = 0; i < values.size(); ++i)
-    // Check if those row and column have already a value
+    // Check if these row and column have already a value
     if(rows[i] == input_row_idx && columns[i] == input_col_idx)
       return values[i];
 
   // otherwise it adds it and returns the new value, keeping an
   // increasing order in rows (and consequently values and columns).
   // Compute the right position in which to insert
+  // Source: https://www.geeksforgeeks.org/vector-insert-function-in-cpp-stl/amp/
   int position = 0;
   for (int i = 0; i < rows.size(); ++i) {
     if(rows[i] >= input_row_idx) {
@@ -34,7 +34,6 @@ double& SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int inp
       break;
     }
   }
-
   rows.insert(rows.begin() + position, input_row_idx);
   columns.insert(columns.begin() + position, input_col_idx);
   values.insert(values.begin() + position, 0.0); // default value of 0 that will be changed later
@@ -55,25 +54,25 @@ double SparseMatrixCOO::operator()(unsigned int input_row_idx, unsigned int inpu
 }
 
 std::vector<double> SparseMatrixCOO::operator*(const std::vector<double>& vect) const {
-  if (this->get_num_columns() != vect.size()){
-        throw std::invalid_argument("Matrix and vector dimensions do not match.");
-  }
+  if (this->get_num_columns() != vect.size()) {
+    throw std::invalid_argument("Matrix and vector dimensions do not match");
+  } // Source: https://stackoverflow.com/questions/28554927/c-error-invalid-argument-was-not-declared-in-this-scope 
 
   int num_rows = this->get_num_rows();
   std::vector<double> result(num_rows, 0.0);
   int j = 0; // index of the current vector values considered
   for (int i = 0; i < num_rows; ++i) {
     double sum = 0.0;
-    // checks if we're still in the same row
+    // while still in the same row
     while (j < values.size() && rows[j] == i) {
       sum += values[j] * vect[columns[j]];
       j++;
     }
     result[i] = sum;
   }
+
   return result;
 }
-
 
 void SparseMatrixCOO::print_matrix() const {
   std::cout << "The matrix written in COO is: " << std::endl;
@@ -119,7 +118,7 @@ void SparseMatrixCOO::print_dense_matrix() const {
         i++;
       }
       else { std::cout << "0  "; } // otherwise print 0
-      col_num++;
+      col_num++; // go to next column
     }
     // even if there aren't other nnz values in a row, the row may not be finished yet
     while(col_num < num_columns) {

@@ -5,6 +5,7 @@
 
 class SparseMatrixCSR : public SparseMatrix {
 public:
+   // Constructor
    SparseMatrixCSR(std::vector<double>& values, std::vector<unsigned int>& row_idx, std::vector<unsigned int>& columns);
    
    // Overriding the following pure virtual methods
@@ -17,7 +18,7 @@ public:
    void print_dense_matrix() const override;
 
 private:
-// the vector row_idx_CSR of int contains the cumulative number of nonzero entries up to the i-th row excluded
+// the vector row_idx contains the cumulative number of nonzero entries up to the i-th row excluded
 std::vector<unsigned int> row_idx;
 };
 

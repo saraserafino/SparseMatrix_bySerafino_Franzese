@@ -5,6 +5,7 @@
 
 class SparseMatrixCOO : public SparseMatrix {
 public:
+    // Constructor
     SparseMatrixCOO(std::vector<double>& values, std::vector<unsigned int>& rows, std::vector<unsigned int>& columns);
     
     // Overriding the following pure virtual methods

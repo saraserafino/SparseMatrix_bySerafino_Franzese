@@ -3,12 +3,11 @@
 #include <iostream>
 
 int main(){
+  std::cout << "The matrix M is written in COO format." << std::endl;
   std::vector<double> values = {3.1, 4, 5, 7.4, 2, 6};
   std::vector<unsigned int> rows = {0, 0, 1, 1, 3, 3};
-  std::vector<unsigned int> columns = {2, 4, 2, 4, 1, 3}; // COO
+  std::vector<unsigned int> columns = {2, 4, 2, 4, 1, 3};
   SparseMatrixCOO M(values, rows, columns);
-
-  std::cout << "The matrix M is written in COO format." << std::endl;
   std::cout << "M has " << M.get_num_rows() << " rows, " << M.get_num_columns()
   << " columns and " << M.get_num_nnz() << " non-zero values." << std::endl;
   
@@ -18,8 +17,9 @@ int main(){
 
   M.print_matrix();
   std::cout << "Converting the matrix..." << std::endl;
-  // M.convert() returns a pointer to SparseMatrix, with casting (SparseMatrixCSR*)
-  // we convert it to a pointer to SparseMatrixCSR
+  // M.convert() returns a pointer to SparseMatrix, we convert it to a
+  // pointer to SparseMatrixCSR with casting (SparseMatrixCSR*)
+  // Source: https://www.geeksforgeeks.org/static_cast-in-cpp/amp/
   SparseMatrixCSR* Mconverted = (SparseMatrixCSR*) M.convert();
   Mconverted->print_matrix();
   M.print_dense_matrix();
@@ -64,10 +64,9 @@ int main(){
 
 
   // Be aware when defining row_idx for CSR: the first element must be 0 by convention
-  std::vector<unsigned int> row_idx = {0, 2, 4, 4, 6}; // CSR
-  SparseMatrixCSR M2(values, row_idx, columns);
-
   std::cout << "The matrix M2 is written in CSR format." << std::endl;
+  std::vector<unsigned int> row_idx = {0, 2, 4, 4, 6};
+  SparseMatrixCSR M2(values, row_idx, columns);
   std::cout << "M2 has " << M2.get_num_rows() << " rows, " << M2.get_num_columns()
   << " columns and " << M2.get_num_nnz() << " non-zero values." << std::endl;
 

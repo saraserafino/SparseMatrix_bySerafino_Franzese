@@ -2,6 +2,7 @@
 #include "SparseMatrixCOO.hpp" // we need it for the convert method
 #include <iostream>
 
+// Constructor
 SparseMatrixCSR::SparseMatrixCSR(std::vector<double>& values, std::vector<unsigned int>& row_idx, std::vector<unsigned int>& columns)
 : SparseMatrix(values,columns), row_idx(row_idx) {}
 
@@ -15,14 +16,15 @@ double& SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inp
   if(input_row_idx >= this->get_num_rows() || input_col_idx >= this->get_num_columns()) {
     throw std::out_of_range ("Indexes out of range");
   }
-
+  
   unsigned int row_start = row_idx[input_row_idx];
   unsigned int row_end = row_idx[input_row_idx + 1];
 
-  // Check if those row and column have already a value
+  // Check if these row and column have already a value
   for (unsigned int i = row_start; i < row_end; i++)
     if (columns[i] == input_col_idx)
-      return values[i]; // it returns it
+      return values[i];
+
   // otherwise it adds it and returns the new value.
   // Compute the right position in which to insert it
   unsigned int position = row_start;
@@ -34,9 +36,8 @@ double& SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inp
   values.insert(values.begin() + position, 0.0);
 
   // Update row_idx for next rows
-  for (unsigned int i = input_row_idx + 1; i < row_idx.size(); i++) {
+  for (unsigned int i = input_row_idx + 1; i < row_idx.size(); i++)
     row_idx[i]++;
-  }
 
   return values[position];
 }
@@ -46,6 +47,7 @@ double SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inpu
   if(input_row_idx >= this->get_num_rows() || input_col_idx >= this->get_num_columns()) {
     throw std::out_of_range ("Indexes out of range");
   }
+  
   unsigned int row_start = row_idx[input_row_idx];
   unsigned int row_end = row_idx[input_row_idx + 1];
 
@@ -58,8 +60,8 @@ double SparseMatrixCSR::operator()(unsigned int input_row_idx, unsigned int inpu
 
 
 std::vector<double> SparseMatrixCSR::operator* (const std::vector<double>& vect) const {
-  if (this->get_num_columns() != vect.size()){
-        throw std::invalid_argument("Matrix and vector dimensions do not match.");
+  if (this->get_num_columns() != vect.size()) {
+    throw std::invalid_argument("Matrix and vector dimensions do not match");
   }
 
   int num_rows = this->get_num_rows();
@@ -72,6 +74,7 @@ std::vector<double> SparseMatrixCSR::operator* (const std::vector<double>& vect)
     }
     result[i] = sum;
   }
+
   return result;
 }
 
@@ -116,13 +119,13 @@ void SparseMatrixCSR::print_dense_matrix() const {
   for (int i = 0; i < row_idx.size() - 1; ++i) {
     int col_num = 0; // number of column
     while (nnz < row_idx[i + 1]) { // while there are new non-zero values
-      if(columns[j] == col_num) { // if the value of the column matches
+      if(columns[j] == col_num) { // if the values of the column match
         std::cout << values[j] << "  "; // print the value
         j++;
         nnz++;
       }
       else { std::cout << "0  "; } // otherwise print 0
-      col_num++;
+      col_num++; // go to next column
     }
     // even if there aren't new nnz values, the row may not be finished yet
     while(col_num < num_columns) {
